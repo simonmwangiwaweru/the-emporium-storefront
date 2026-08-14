@@ -68,7 +68,7 @@ async function loadProducts() {
   } catch (err) {
     productList.innerHTML = '';
     const msg = document.createElement('p');
-    msg.className = 'text-center text-on-surface-variant text-sm py-6';
+    msg.className = 'status-message';
     msg.textContent = 'Could not load products. Please try again shortly.';
     productList.appendChild(msg);
     console.error(err);
@@ -83,7 +83,7 @@ function renderList() {
 
   if (filtered.length === 0) {
     const msg = document.createElement('p');
-    msg.className = 'text-center text-on-surface-variant text-sm py-6';
+    msg.className = 'status-message';
     msg.textContent = 'No products in this category.';
     productList.appendChild(msg);
     return;
@@ -94,13 +94,12 @@ function renderList() {
 
 function buildRow(product) {
   const row = document.createElement('div');
-  row.className = 'flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg p-2 flex-wrap shadow-sm';
+  row.className = 'product-row';
 
   const thumb = document.createElement('div');
-  thumb.className = 'w-10 h-10 rounded-md bg-surface-container-low overflow-hidden flex-shrink-0 flex items-center justify-center text-[9px] text-on-surface-variant text-center';
+  thumb.className = 'row-thumb';
   if (product.image) {
     const img = document.createElement('img');
-    img.className = 'w-full h-full object-cover';
     img.src = product.image;
     img.alt = product.name || '';
     thumb.appendChild(img);
@@ -110,15 +109,15 @@ function buildRow(product) {
   row.appendChild(thumb);
 
   const info = document.createElement('div');
-  info.className = 'flex-1 min-w-[120px]';
+  info.className = 'row-info';
 
   const name = document.createElement('div');
-  name.className = 'font-semibold text-sm text-on-surface';
+  name.className = 'row-name';
   name.textContent = product.name || '';
   info.appendChild(name);
 
   const meta = document.createElement('div');
-  meta.className = 'text-xs text-on-surface-variant';
+  meta.className = 'row-meta';
   meta.textContent = `${CATEGORY_LABELS[product.category] || product.category || ''} · ${product.unit || ''}`;
   info.appendChild(meta);
 
@@ -126,7 +125,7 @@ function buildRow(product) {
 
   const priceInput = document.createElement('input');
   priceInput.type = 'text';
-  priceInput.className = 'w-24 border border-outline-variant rounded-md px-2 py-1.5 text-sm transition-colors';
+  priceInput.className = 'row-price-input';
   priceInput.value = product.price || '';
   priceInput.placeholder = 'Contact for price';
   priceInput.addEventListener('change', async () => {
@@ -143,7 +142,7 @@ function buildRow(product) {
   row.appendChild(priceInput);
 
   const stockLabel = document.createElement('label');
-  stockLabel.className = 'flex items-center gap-1 text-xs text-on-surface-variant whitespace-nowrap';
+  stockLabel.className = 'row-stock';
   const stockCheckbox = document.createElement('input');
   stockCheckbox.type = 'checkbox';
   stockCheckbox.checked = product.inStock !== false;
@@ -163,7 +162,7 @@ function buildRow(product) {
 
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
-  deleteBtn.className = 'bg-secondary text-white text-xs font-semibold px-2.5 py-1.5 rounded-md';
+  deleteBtn.className = 'btn-danger';
   deleteBtn.textContent = 'Delete';
   deleteBtn.addEventListener('click', async () => {
     if (!confirm(`Delete "${product.name}"? This can't be undone.`)) return;
@@ -182,8 +181,8 @@ function buildRow(product) {
 }
 
 function flash(el) {
-  el.classList.add('bg-green-50', 'border-tertiary');
-  setTimeout(() => el.classList.remove('bg-green-50', 'border-tertiary'), 600);
+  el.classList.add('is-saved');
+  setTimeout(() => el.classList.remove('is-saved'), 600);
 }
 
 addForm.addEventListener('submit', async (e) => {

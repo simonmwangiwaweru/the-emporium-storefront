@@ -4,78 +4,38 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>THE EMPORIUM — Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          primary: "#944A00",
-          "primary-container": "#E67E22",
-          "on-primary-container": "#502600",
-          secondary: "#B02D21",
-          tertiary: "#496800",
-          "on-surface": "#1B1C1C",
-          "on-surface-variant": "#6B5B4B",
-          surface: "#FCF9F8",
-          "surface-container-low": "#F6F3F2",
-          "surface-container-lowest": "#FFFFFF",
-          "outline-variant": "#E4D9CC",
-        },
-        fontFamily: {
-          display: ["Poppins"],
-          body: ["Inter"],
-        },
-      },
-    },
-  };
-</script>
-<style>
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  }
-  /* #gate uses Tailwind's `flex` utility directly, which is author-origin CSS
-     and would otherwise override the browser's default [hidden]{display:none}
-     rule (also author-origin) once JS toggles the hidden attribute. */
-  [hidden] {
-    display: none !important;
-  }
-</style>
+<link rel="stylesheet" href="css/site.css" />
 </head>
-<body class="bg-surface text-on-surface font-body antialiased">
+<body>
 
-  <section id="gate" class="min-h-screen flex items-center justify-center bg-primary px-4">
-    <div class="bg-surface-container-lowest rounded-xl shadow-lg p-6 max-w-sm w-full text-center">
-      <h1 class="font-display font-bold text-xl text-primary mb-1">THE EMPORIUM</h1>
-      <p class="text-on-surface-variant text-sm mb-4">Admin — enter passcode</p>
-      <form id="gate-form" class="flex gap-2">
-        <input type="password" id="gate-input" placeholder="Passcode" autocomplete="off"
-          class="flex-1 border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-        <button type="submit" class="bg-primary text-white font-display font-semibold text-sm px-4 rounded-lg">Enter</button>
+  <section id="gate" class="gate">
+    <div class="gate-box">
+      <h1>THE EMPORIUM</h1>
+      <p class="gate-sub">Admin — enter passcode</p>
+      <form id="gate-form">
+        <input type="password" id="gate-input" class="gate-input" placeholder="Passcode" autocomplete="off" />
+        <button type="submit" class="btn-primary">Enter</button>
       </form>
-      <p id="gate-error" class="text-secondary text-xs mt-3" hidden>Wrong passcode.</p>
-      <p class="text-on-surface-variant text-xs mt-4 leading-relaxed">Note: this passcode is a basic gate, not real security. Don't share this URL widely without upgrading to real login first.</p>
-      <a class="text-primary text-xs mt-3 inline-block" href="index.html">&larr; Back to storefront</a>
+      <p id="gate-error" class="gate-error" hidden>Wrong passcode.</p>
+      <p class="gate-note">Note: this passcode is a basic gate, not real security. Don't share this URL widely without upgrading to real login first.</p>
+      <a class="gate-back" href="index.html">&larr; Back to storefront</a>
     </div>
   </section>
 
   <div id="dashboard" hidden>
-    <header class="bg-primary text-white px-4 py-3 flex items-center justify-between sticky top-0 z-10">
-      <h1 class="font-display font-semibold text-base">THE EMPORIUM — Admin</h1>
-      <a class="text-white/85 text-xs" href="index.html">View storefront</a>
+    <header class="admin-header">
+      <h1>THE EMPORIUM — Admin</h1>
+      <a href="index.html">View storefront</a>
     </header>
 
-    <section class="p-4 max-w-2xl mx-auto">
-      <h2 class="font-display font-semibold text-primary text-sm uppercase tracking-wide mb-2">Add product</h2>
-      <form id="add-form" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-2 shadow-sm">
-        <input type="text" id="f-name" placeholder="Name" required
-          class="border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-        <input type="text" id="f-brand" placeholder="Brand (optional)"
-          class="border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-        <select id="f-category" required
-          class="border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+    <section class="admin-section">
+      <h2>Add product</h2>
+      <form id="add-form" class="add-form">
+        <input type="text" id="f-name" placeholder="Name" required />
+        <input type="text" id="f-brand" placeholder="Brand (optional)" />
+        <select id="f-category" required>
           <option value="" disabled selected>Category</option>
           <option value="teas">Teas</option>
           <option value="coffeehoney">Coffee &amp; Honey</option>
@@ -83,21 +43,18 @@
           <option value="saltnuts">Salt, Nuts &amp; Botanicals</option>
           <option value="spices">Spices &amp; Dry Goods</option>
         </select>
-        <input type="text" id="f-price" placeholder="Price (e.g. KES 650, leave blank for &quot;Contact for price&quot;)"
-          class="border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-        <input type="text" id="f-unit" placeholder="Unit (e.g. per kg, 120g pack)"
-          class="border border-outline-variant rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-        <input type="file" id="f-photo" accept="image/*" capture="environment" class="text-sm" />
-        <button type="submit" class="bg-primary text-white font-display font-semibold text-sm py-2.5 rounded-lg">Add product</button>
-        <p id="add-status" class="text-xs text-on-surface-variant"></p>
+        <input type="text" id="f-price" placeholder="Price (e.g. KES 650, leave blank for &quot;Contact for price&quot;)" />
+        <input type="text" id="f-unit" placeholder="Unit (e.g. per kg, 120g pack)" />
+        <input type="file" id="f-photo" accept="image/*" capture="environment" />
+        <button type="submit" class="btn-primary">Add product</button>
+        <p id="add-status" class="add-status"></p>
       </form>
     </section>
 
-    <section class="p-4 max-w-2xl mx-auto">
-      <h2 class="font-display font-semibold text-primary text-sm uppercase tracking-wide mb-2">Products</h2>
-      <div class="mb-3">
-        <select id="filter-category"
-          class="border border-outline-variant rounded-lg px-3 py-2 text-xs bg-surface-container-lowest">
+    <section class="admin-section">
+      <h2>Products</h2>
+      <div class="admin-filter">
+        <select id="filter-category">
           <option value="all">All categories</option>
           <option value="teas">Teas</option>
           <option value="coffeehoney">Coffee &amp; Honey</option>
@@ -106,8 +63,8 @@
           <option value="spices">Spices &amp; Dry Goods</option>
         </select>
       </div>
-      <div id="product-list" class="flex flex-col gap-1.5">
-        <p class="text-center text-on-surface-variant text-sm py-6">Loading products…</p>
+      <div id="product-list" class="product-list">
+        <p class="status-message">Loading products…</p>
       </div>
     </section>
   </div>
