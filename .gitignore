@@ -1,0 +1,22 @@
+# Reference/inspiration files, not part of the deployed site
+*.zip
+*.docx
+*.jpeg
+IMG-*.jpg
+ChatGPT Image*.png
+Microsoft.Services.Store.winmd
+
+# Raw/unprocessed product photos at project root (processed copies live in images/)
+[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]*.jpg
+
+# Internal planning, agent/session state — not needed to run the site
+plans/
+.agents/
+.claude/
+agent/
+skills-lock.json
+deploy/
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db

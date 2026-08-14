@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>THE EMPORIUM — Quality Teas, Spices &amp; Wholesale Goods</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#944A00",
+          "primary-container": "#E67E22",
+          "on-primary-container": "#502600",
+          secondary: "#B02D21",
+          tertiary: "#496800",
+          "tertiary-container": "#81a538",
+          "on-surface": "#1B1C1C",
+          "on-surface-variant": "#6B5B4B",
+          surface: "#FCF9F8",
+          "surface-container-low": "#F6F3F2",
+          "surface-container-lowest": "#FFFFFF",
+          "outline-variant": "#E4D9CC",
+          whatsapp: "#25D366",
+        },
+        fontFamily: {
+          display: ["Poppins"],
+          body: ["Inter"],
+        },
+        spacing: {
+          xs: "4px",
+          base: "8px",
+          sm: "12px",
+          md: "24px",
+          lg: "48px",
+          xl: "80px",
+          gutter: "24px",
+        },
+      },
+    },
+  };
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Smooth crossfade when the product grid re-renders (category/search change).
+     Native browser API — no framework needed. Unsupported browsers just skip straight to the new state. */
+  #product-grid {
+    view-transition-name: product-grid;
+  }
+  ::view-transition-old(product-grid),
+  ::view-transition-new(product-grid) {
+    animation-duration: 0.22s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #product-grid {
+      view-transition-name: none;
+    }
+  }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased overflow-x-hidden">
+
+<!-- Top bar -->
+<header class="fixed top-0 w-full h-[64px] bg-surface/95 backdrop-blur-md shadow-sm z-[100] flex items-center justify-between px-gutter">
+  <h1 class="font-display font-bold text-lg text-primary tracking-tight">THE EMPORIUM</h1>
+  <a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="flex items-center gap-1 text-whatsapp hover:opacity-80 active:scale-95 transition-all">
+    <span class="material-symbols-outlined">chat</span>
+  </a>
+</header>
+
+<main class="pt-[64px] pb-[76px] md:pb-0">
+
+  <!-- Compact banner -->
+  <section class="relative w-full h-[110px] overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/hero-tea.jpg'); background-position: center 30%;"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/40"></div>
+    <div class="relative h-full flex flex-col justify-center px-gutter text-white">
+      <h2 class="font-display font-bold text-lg leading-tight">THE EMPORIUM</h2>
+      <p class="font-body text-xs text-white/90">Wholesale &amp; retail · Free delivery Nairobi &amp; Kiambu</p>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <section class="px-gutter py-sm bg-surface sticky top-[64px] z-40 border-b border-outline-variant">
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+      <input type="text" id="search-input" placeholder="Search products…" autocomplete="off"
+        class="w-full bg-surface-container-low border-0 rounded-lg py-2.5 pl-11 pr-4 text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+    </div>
+  </section>
+
+  <!-- Category chips -->
+  <section id="collections" class="py-sm scroll-mt-[64px] bg-surface border-b border-outline-variant">
+    <div id="collections-scroll" class="flex overflow-x-auto hide-scrollbar gap-4 px-gutter">
+
+      <button data-category="all" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">apps</span>
+        </span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">All</span>
+      </button>
+
+      <button data-category="teas" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full overflow-hidden bg-cover bg-center border border-outline-variant" style="background-image: url('images/gallery-2.jpg');"></span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">Teas</span>
+      </button>
+
+      <button data-category="coffeehoney" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full overflow-hidden bg-cover bg-center border border-outline-variant" style="background-image: url('images/gallery-6.jpg');"></span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">Coffee &amp; Honey</span>
+      </button>
+
+      <button data-category="oils" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full overflow-hidden bg-cover bg-center border border-outline-variant" style="background-image: url('images/gallery-4.jpg');"></span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">Oils &amp; Tonics</span>
+      </button>
+
+      <button data-category="saltnuts" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full overflow-hidden bg-cover bg-center border border-outline-variant" style="background-image: url('images/gallery-3.jpg');"></span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">Salt &amp; Nuts</span>
+      </button>
+
+      <button data-category="spices" class="collection-card flex-shrink-0 flex flex-col items-center gap-1 w-16">
+        <span class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">spa</span>
+        </span>
+        <span class="text-[11px] text-on-surface leading-tight text-center">Spices</span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- Product grid -->
+  <section class="bg-surface-container-low py-sm scroll-mt-[64px]" id="products">
+    <div class="px-gutter py-2 flex items-center justify-between">
+      <span id="grid-count" class="text-xs text-on-surface-variant font-semibold uppercase tracking-wide"></span>
+    </div>
+    <div id="product-grid" class="grid grid-cols-3 gap-1.5 px-1.5">
+      <p class="col-span-3 text-center text-on-surface-variant py-lg">Loading products…</p>
+    </div>
+  </section>
+
+  <!-- Why order from us -->
+  <section class="py-xl px-gutter bg-surface">
+    <div class="text-center mb-lg">
+      <h3 class="font-display font-semibold text-xl text-primary mb-xs">Why Order From Us</h3>
+      <p class="text-on-surface-variant text-sm">Straightforward wholesale &amp; retail, delivered.</p>
+    </div>
+    <div class="grid grid-cols-1 gap-lg max-w-sm mx-auto">
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#FFE3C2] rounded-full flex items-center justify-center text-primary mb-base">
+          <span class="material-symbols-outlined text-3xl">storefront</span>
+        </div>
+        <h4 class="font-display font-semibold text-base mb-xs">Wholesale &amp; Retail</h4>
+        <p class="text-on-surface-variant text-sm max-w-[260px]">Buy in bulk at wholesale per-kg pricing, or pick up single packs at retail price.</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#E3EBCB] rounded-full flex items-center justify-center text-tertiary mb-base">
+          <span class="material-symbols-outlined text-3xl">local_shipping</span>
+        </div>
+        <h4 class="font-display font-semibold text-base mb-xs">Free Delivery</h4>
+        <p class="text-on-surface-variant text-sm max-w-[260px]">Free delivery around Nairobi &amp; Kiambu — just message us your order on WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo gallery -->
+  <section class="py-lg">
+    <div class="px-gutter mb-md text-center">
+      <h3 class="font-display font-semibold text-xl text-primary">From Our Shelves</h3>
+      <p class="text-on-surface-variant text-sm">A look at what we stock</p>
+    </div>
+    <div class="grid grid-cols-3 gap-[2px]">
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-1.jpg" alt="Theta Premium Tea" /></div>
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-2.jpg" alt="Kagwe Premium Tea" /></div>
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-3.jpg" alt="Roasted Cashew Nuts" /></div>
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-4.jpg" alt="Black Seed Oil" /></div>
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-5.jpg" alt="KeiWai Masala Tea" /></div>
+      <div class="aspect-square overflow-hidden bg-surface-container-low"><img class="w-full h-full object-cover" src="images/gallery-6.jpg" alt="Honey" /></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Bottom nav (mobile) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center py-base px-xs md:hidden bg-surface border-t border-outline-variant z-50">
+  <a href="#" id="nav-home" class="flex flex-col items-center justify-center text-primary font-semibold active:scale-90 transition-transform">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+    <span class="text-[11px]">Home</span>
+  </a>
+  <a href="#collections" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+    <span class="material-symbols-outlined">category</span>
+    <span class="text-[11px]">Categories</span>
+  </a>
+  <a href="#products" id="nav-search" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+    <span class="material-symbols-outlined">search</span>
+    <span class="text-[11px]">Search</span>
+  </a>
+  <a id="nav-whatsapp" href="#" target="_blank" rel="noopener" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform">
+    <span class="material-symbols-outlined">chat</span>
+    <span class="text-[11px]">WhatsApp</span>
+  </a>
+</nav>
+
+<!-- Footer -->
+<footer class="bg-[#221A14] text-white/90 py-xl">
+  <div class="px-gutter space-y-lg">
+    <div>
+      <h2 class="font-display font-bold text-xl text-white mb-base">THE EMPORIUM</h2>
+      <p class="text-sm opacity-80">Quality teas, spices &amp; wholesale goods.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-lg text-sm">
+      <div class="space-y-sm">
+        <h5 class="text-xs text-[#E67E22] uppercase tracking-widest font-semibold">Categories</h5>
+        <ul class="space-y-xs">
+          <li><a class="hover:underline" href="#collections">Teas</a></li>
+          <li><a class="hover:underline" href="#collections">Coffee &amp; Honey</a></li>
+          <li><a class="hover:underline" href="#collections">Oils &amp; Tonics</a></li>
+          <li><a class="hover:underline" href="#collections">Spices &amp; Dry Goods</a></li>
+        </ul>
+      </div>
+      <div class="space-y-sm">
+        <h5 class="text-xs text-[#E67E22] uppercase tracking-widest font-semibold">Contact</h5>
+        <ul class="space-y-xs">
+          <li><a id="footer-whatsapp" class="hover:underline" href="#" target="_blank" rel="noopener">WhatsApp: 0794 529 421</a></li>
+          <li>Free delivery: Nairobi &amp; Kiambu</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-lg border-t border-white/10">
+      <p class="text-xs opacity-60 text-center">© 2026 THE EMPORIUM. Wholesale &amp; Retail.</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/storefront.js"></script>
+</body>
+</html>
