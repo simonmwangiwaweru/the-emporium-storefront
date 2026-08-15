@@ -17,6 +17,15 @@ agent/
 skills-lock.json
 deploy/
 
+# Unrelated files that ended up in this folder / scratch review dirs
+.stitch_review/
+.astro_review/
+.tmp_zip_check/
+e2cfe451-862f-4117-9ec0-80ffab64112f.png
+
+# Superseded by css/site.css
+css/style.css
+
 # OS/editor cruft
 .DS_Store
 Thumbs.db

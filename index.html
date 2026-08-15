@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>THE EMPORIUM — Quality Teas, Spices &amp; Wholesale Goods</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/site.css" />
 </head>
@@ -12,7 +12,7 @@
 
 <!-- Top bar -->
 <header class="topbar">
-  <h1 class="topbar-title">THE EMPORIUM</h1>
+  <h1 class="topbar-title">The Emporium</h1>
   <a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="topbar-whatsapp">
     <span class="material-symbols-outlined">chat</span>
   </a>
@@ -20,13 +20,16 @@
 
 <main>
 
-  <!-- Compact banner -->
+  <!-- Signboard banner -->
   <section class="banner">
-    <div class="banner-bg" style="background-image: url('images/hero-tea.jpg');"></div>
-    <div class="banner-overlay"></div>
     <div class="banner-content">
-      <h2 class="banner-title">THE EMPORIUM</h2>
-      <p class="banner-sub">Wholesale &amp; retail · Free delivery Nairobi &amp; Kiambu</p>
+      <span class="banner-eyebrow">WHOLESALE &amp; RETAIL · NAIROBI &amp; KIAMBU</span>
+      <h2 class="banner-title">Teas, Spices &amp; Dry Goods</h2>
+      <p class="banner-sub">Priced per kilo, ordered on WhatsApp, delivered free around Nairobi &amp; Kiambu.</p>
+      <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="banner-cta">
+        <span class="material-symbols-outlined">chat</span>
+        Message us to order
+      </a>
     </div>
   </section>
 
@@ -43,36 +46,32 @@
     <div id="collections-scroll" class="collections-scroll hide-scrollbar">
 
       <button data-category="all" class="collection-card">
-        <span class="collection-icon is-primary">
-          <span class="material-symbols-outlined">apps</span>
-        </span>
+        <span class="collection-swatch is-all"><span class="material-symbols-outlined">apps</span></span>
         <span class="collection-label">All</span>
       </button>
 
       <button data-category="teas" class="collection-card">
-        <span class="collection-photo" style="background-image: url('images/gallery-2.jpg');"></span>
+        <span class="collection-swatch is-teas"><span class="material-symbols-outlined">emoji_food_beverage</span></span>
         <span class="collection-label">Teas</span>
       </button>
 
       <button data-category="coffeehoney" class="collection-card">
-        <span class="collection-photo" style="background-image: url('images/gallery-6.jpg');"></span>
+        <span class="collection-swatch is-coffeehoney"><span class="material-symbols-outlined">coffee</span></span>
         <span class="collection-label">Coffee &amp; Honey</span>
       </button>
 
       <button data-category="oils" class="collection-card">
-        <span class="collection-photo" style="background-image: url('images/gallery-4.jpg');"></span>
+        <span class="collection-swatch is-oils"><span class="material-symbols-outlined">water_drop</span></span>
         <span class="collection-label">Oils &amp; Tonics</span>
       </button>
 
       <button data-category="saltnuts" class="collection-card">
-        <span class="collection-photo" style="background-image: url('images/gallery-3.jpg');"></span>
+        <span class="collection-swatch is-saltnuts"><span class="material-symbols-outlined">grain</span></span>
         <span class="collection-label">Salt &amp; Nuts</span>
       </button>
 
       <button data-category="spices" class="collection-card">
-        <span class="collection-icon is-container">
-          <span class="material-symbols-outlined">spa</span>
-        </span>
+        <span class="collection-swatch is-spices"><span class="material-symbols-outlined">spa</span></span>
         <span class="collection-label">Spices</span>
       </button>
 
@@ -93,22 +92,22 @@
   <section class="why-section">
     <div class="why-header">
       <h3>Why Order From Us</h3>
-      <p>Straightforward wholesale &amp; retail, delivered.</p>
+      <p>// straightforward wholesale &amp; retail</p>
     </div>
     <div class="why-grid">
       <div class="why-item">
-        <div class="why-icon is-primary">
-          <span class="material-symbols-outlined">storefront</span>
+        <div class="why-icon"><span class="material-symbols-outlined">scale</span></div>
+        <div>
+          <h4>Wholesale &amp; Retail</h4>
+          <p>Buy in bulk at per-kilo wholesale pricing, or pick up single packs at retail.</p>
         </div>
-        <h4>Wholesale &amp; Retail</h4>
-        <p>Buy in bulk at wholesale per-kg pricing, or pick up single packs at retail price.</p>
       </div>
       <div class="why-item">
-        <div class="why-icon is-tertiary">
-          <span class="material-symbols-outlined">local_shipping</span>
+        <div class="why-icon"><span class="material-symbols-outlined">local_shipping</span></div>
+        <div>
+          <h4>Free Delivery</h4>
+          <p>Free delivery around Nairobi &amp; Kiambu — just message your order on WhatsApp.</p>
         </div>
-        <h4>Free Delivery</h4>
-        <p>Free delivery around Nairobi &amp; Kiambu — just message us your order on WhatsApp.</p>
       </div>
     </div>
   </section>
@@ -117,7 +116,7 @@
   <section class="gallery-section">
     <div class="gallery-header">
       <h3>From Our Shelves</h3>
-      <p>A look at what we stock</p>
+      <p>// a look at what we stock</p>
     </div>
     <div class="gallery-grid">
       <div class="gallery-tile"><img src="images/gallery-1.jpg" alt="Theta Premium Tea" /></div>
@@ -155,7 +154,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <h2>THE EMPORIUM</h2>
+      <h2>The Emporium</h2>
       <p>Quality teas, spices &amp; wholesale goods.</p>
     </div>
     <div class="footer-cols">
@@ -177,7 +176,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 THE EMPORIUM. Wholesale &amp; Retail.</p>
+      <p>© 2026 THE EMPORIUM — WHOLESALE &amp; RETAIL</p>
     </div>
   </div>
 </footer>

@@ -3,6 +3,8 @@ import {
   collection,
   getDocs
 } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
+import { initParallax } from './parallax.js';
+import { initScrollReveal } from './reveal.js';
 
 const PHONE = '254794529421'; // 0794529421 with country code, no leading zero
 
@@ -141,6 +143,7 @@ async function loadProducts() {
     const snap = await getDocs(collection(db, 'products'));
     allProducts = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
     render();
+    initScrollReveal('.product-card'); // first render only — later filter/search updates use the crossfade instead
   } catch (err) {
     grid.innerHTML = '';
     const msg = document.createElement('p');
@@ -174,3 +177,5 @@ document.getElementById('nav-search').addEventListener('click', () => {
 });
 
 loadProducts();
+initParallax();
+initScrollReveal('.collection-card', { stagger: 50 });
