@@ -281,13 +281,13 @@ function featuredProducts() {
 
   // Lead with variety so this is a considered edit, not merely the first records returned.
   available.forEach((product) => {
-    if (picks.length < 3 && !representedCategories.has(product.category)) {
+    if (picks.length < 4 && !representedCategories.has(product.category)) {
       picks.push(product);
       representedCategories.add(product.category);
     }
   });
   available.forEach((product) => {
-    if (picks.length < 3 && !picks.includes(product)) picks.push(product);
+    if (picks.length < 4 && !picks.includes(product)) picks.push(product);
   });
   return picks;
 }

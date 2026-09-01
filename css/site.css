@@ -958,6 +958,28 @@ main { padding-top:100px; }
 .gallery-tile span { position:absolute; z-index:1; left:13px; bottom:12px; color:#fff; font:700 .83rem/1.1 var(--font-display); }
 .site-footer { background:#2a1b0f; }
 
+/* Cohesion pass: let the photography and merchandising carry one shared identity. */
+.collections-section .collection-swatch { position:relative; overflow:hidden; background:#2d1d11; }
+.collections-section .collection-swatch > img { width:100%; height:100%; display:block; object-fit:cover; filter:saturate(.76) contrast(1.05) brightness(.82); transform:scale(1.08); transition:transform 500ms var(--ease-in-out, cubic-bezier(.77,0,.175,1)), filter 180ms ease; }
+.collections-section .collection-swatch .material-symbols-outlined { display:none; }
+@media (hover:hover) and (pointer:fine) { .collections-section .collection-card:hover .collection-swatch > img { transform:scale(1.18); filter:saturate(1) contrast(1.02) brightness(.95); } }
+.collections-section .collection-card.is-active .collection-swatch { outline:2px solid var(--paprika); outline-offset:3px; box-shadow:none; }
+
+.featured-section { padding-bottom:44px; }.products-section { padding-top:44px; padding-bottom:68px; }
+.featured-heading, .products-header { border-bottom:1px solid var(--line); padding-bottom:14px; }
+.featured-grid .product-card, .product-grid .product-card { border-radius:0; background:#fffaf1; }
+.featured-grid .product-photo, .product-grid .product-photo { background:linear-gradient(145deg,#f6ead7,#fffdf8); }
+.featured-grid .order-btn, .product-grid .order-btn { width:100%; justify-content:center; letter-spacing:.07em; }
+.featured-grid .product-name, .product-grid .product-name { letter-spacing:-.025em; }
+
+.why-section { position:relative; overflow:hidden; }.why-section::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,rgba(197,140,40,.08),transparent 36%); }
+.why-section > * { position:relative; z-index:1; }.why-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.why-item { min-height:170px; align-items:flex-start; }.why-item h4 { margin-top:3px; }
+.gallery-section { padding-bottom:18px; }.gallery-tile { border-radius:2px; overflow:hidden; }
+.recipe-strip { padding-bottom:68px; }.gift-banner, .refill-banner { margin-bottom:68px; }
+
+@media (max-width:760px) { .collections-section { padding-top:29px; }.collections-scroll { gap:15px; padding:4px 20px 12px; }.collection-card { flex:0 0 78px; }.collection-swatch { width:62px; height:62px; }.collection-label { font-size:.68rem; line-height:1.12; }.featured-section { padding-top:39px; }.featured-grid, .product-grid { gap:12px; }.product-card { padding:7px; }.product-name { font-size:.92rem; }.product-info { padding:0 3px 4px; }.order-btn { min-height:34px; padding-inline:7px; font-size:.59rem; }.why-section { padding-top:46px; padding-bottom:46px; }.why-header h3 { font-size:2.18rem; }.why-grid { grid-template-columns:1fr; gap:10px; }.why-item { min-height:0; padding:18px; }.gallery-section { padding-top:43px; }.recipe-strip { padding-bottom:46px; }.gift-banner, .refill-banner { margin-bottom:46px; } }
+
 /* Generous Pantry: editorial warmth, deliberately restrained motion. */
 :root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); }
 .banner { isolation:isolate; overflow:hidden; }
