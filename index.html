@@ -3,46 +3,78 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>THE EMPORIUM — Quality Teas, Spices &amp; Wholesale Goods</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<title>The Emporium — Fine Teas, Spices &amp; Pantry Goods</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Playfair+Display:opsz,wght@5..120,600;5..120,700;5..120,800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/site.css" />
 </head>
 <body>
 
-<!-- Top bar -->
+<div class="promo-bar">
+  <span>Free delivery across Nairobi &amp; Kiambu</span>
+  <span class="promo-bar__detail">Wholesale &amp; retail pantry goods</span>
+</div>
+
+<!-- Main navigation -->
 <header class="topbar">
-  <h1 class="topbar-title">The Emporium</h1>
+  <a class="brand-lockup" href="#" aria-label="The Emporium home">
+    <span class="brand-kicker">EST. NAIROBI</span>
+    <h1 class="topbar-title">The Emporium</h1>
+  </a>
+  <nav class="desktop-nav" aria-label="Primary navigation">
+    <a href="#collections">Shop</a>
+    <a href="#products">Teas</a>
+    <a href="#products">Spices</a>
+    <a href="#featured-grid">Best sellers</a>
+    <a href="#gallery">Inspiration</a>
+  </nav>
   <a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="topbar-whatsapp">
     <span class="material-symbols-outlined">chat</span>
+    <span class="topbar-whatsapp__label">Order on WhatsApp</span>
   </a>
 </header>
 
 <main>
 
-  <!-- Signboard banner -->
+  <!-- Editorial hero -->
   <section class="banner">
+    <img class="banner-bg" src="images/pantry-hero.jpg" alt="A warm pantry still life with tea, honey, coffee and spices" />
+    <div class="banner-overlay"></div>
     <div class="banner-content">
-      <span class="banner-eyebrow">WHOLESALE &amp; RETAIL · NAIROBI &amp; KIAMBU</span>
-      <h2 class="banner-title">Teas, Spices &amp; Dry Goods</h2>
-      <p class="banner-sub">Priced per kilo, ordered on WhatsApp, delivered free around Nairobi &amp; Kiambu.</p>
+      <span class="banner-eyebrow">The Emporium pantry · Nairobi</span>
+      <h2 class="banner-title">Every ingredient<br><em>belongs in a story.</em></h2>
+      <p class="banner-sub">Exceptional teas, spices and pantry essentials, gathered for the meals, rituals and people you care about.</p>
       <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="banner-cta">
-        <span class="material-symbols-outlined">chat</span>
-        Message us to order
+        <span>Start an order</span>
+        <span class="material-symbols-outlined">arrow_outward</span>
       </a>
+      <div class="banner-signature" aria-label="The Emporium promise">
+        <span>Selected with care</span><i></i><span>For generous tables</span>
+      </div>
     </div>
+    <p class="hero-note">Wholesale &amp; retail · Nairobi &amp; Kiambu</p>
+  </section>
+
+  <section class="trust-strip" aria-label="The Emporium service promises">
+    <div><span class="material-symbols-outlined">local_shipping</span><p><strong>Local delivery</strong><span>Nairobi &amp; Kiambu</span></p></div>
+    <div><span class="material-symbols-outlined">workspace_premium</span><p><strong>Chosen with care</strong><span>Goods we would use ourselves</span></p></div>
+    <div><span class="material-symbols-outlined">restaurant</span><p><strong>For every table</strong><span>Home, hospitality &amp; trade</span></p></div>
   </section>
 
   <!-- Search -->
   <section class="search-section">
     <div class="search-wrap">
       <span class="material-symbols-outlined search-icon">search</span>
-      <input type="text" id="search-input" class="search-input" placeholder="Search products…" autocomplete="off" />
+      <input type="text" id="search-input" class="search-input" placeholder="Search the pantry" autocomplete="off" />
     </div>
   </section>
 
   <!-- Category chips -->
   <section id="collections" class="collections-section">
+    <div class="category-heading">
+      <p>Shop by table &amp; ritual</p>
+      <span>Good things, gathered well</span>
+    </div>
     <div id="collections-scroll" class="collections-scroll hide-scrollbar">
 
       <button data-category="all" class="collection-card">
@@ -78,21 +110,58 @@
     </div>
   </section>
 
-  <!-- Product grid -->
-  <section class="products-section" id="products">
-    <div class="products-header">
-      <span id="grid-count" class="grid-count"></span>
+  <section class="featured-section section-reveal">
+    <div class="featured-heading">
+      <div>
+        <p class="section-kicker">THE EMPORIUM FAVOURITES</p>
+        <h3>Best sellers</h3>
+      </div>
+      <a class="text-link" href="#products">View the full pantry <span>→</span></a>
     </div>
-    <div id="product-grid" class="product-grid">
-      <p class="status-message">Loading products…</p>
+    <div id="featured-grid" class="featured-grid" aria-live="polite">
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
     </div>
   </section>
 
+  <section class="pantry-manifesto section-reveal" aria-label="The Emporium story">
+    <div class="pantry-manifesto__seal"><span class="material-symbols-outlined">spa</span><span>From our<br>shelves to<br>your table</span></div>
+    <p>We believe the best kitchens are built slowly: one fragrant tea, dependable staple and shared meal at a time.</p>
+    <a href="#products">Explore the pantry <span>→</span></a>
+  </section>
+
+  <!-- Product grid -->
+  <section class="products-section section-reveal" id="products">
+    <div class="products-header">
+      <span id="grid-count" class="grid-count"></span>
+    </div>
+    <div id="product-grid" class="product-grid" aria-live="polite" aria-busy="true">
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="product-skeleton" aria-hidden="true"><span></span><i></i><b></b></div>
+    </div>
+  </section>
+
+  <section class="order-guide section-reveal" aria-labelledby="order-guide-title">
+    <div class="order-guide-intro">
+      <p class="section-kicker">HOW IT WORKS</p>
+      <h3 id="order-guide-title">Good things,<br><em>made simple.</em></h3>
+    </div>
+    <ol class="order-steps">
+      <li><span>01</span><div><h4>Browse the pantry</h4><p>Find what you need by category, brand or ingredient.</p></div></li>
+      <li><span>02</span><div><h4>Send your order</h4><p>Tap any order button and your item details open in WhatsApp.</p></div></li>
+      <li><span>03</span><div><h4>We arrange delivery</h4><p>We confirm availability, payment and delivery with you directly.</p></div></li>
+    </ol>
+  </section>
+
   <!-- Why order from us -->
-  <section class="why-section">
+  <section class="why-section section-reveal">
     <div class="why-header">
-      <h3>Why Order From Us</h3>
-      <p>// straightforward wholesale &amp; retail</p>
+      <p class="section-kicker">THE EMPORIUM STANDARD</p>
+      <h3>Good food starts here.</h3>
+      <p>Well-selected pantry essentials for home kitchens, neighbourhood cafés and growing businesses.</p>
     </div>
     <div class="why-grid">
       <div class="why-item">
@@ -113,20 +182,31 @@
   </section>
 
   <!-- Photo gallery -->
-  <section class="gallery-section">
+  <section id="gallery" class="gallery-section section-reveal">
     <div class="gallery-header">
-      <h3>From Our Shelves</h3>
-      <p>// a look at what we stock</p>
+      <h3>Kitchen inspiration</h3>
+      <p>Small pleasures, well stocked.</p>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-tile"><img src="images/gallery-1.jpg" alt="Theta Premium Tea" /></div>
-      <div class="gallery-tile"><img src="images/gallery-2.jpg" alt="Kagwe Premium Tea" /></div>
-      <div class="gallery-tile"><img src="images/gallery-3.jpg" alt="Roasted Cashew Nuts" /></div>
-      <div class="gallery-tile"><img src="images/gallery-4.jpg" alt="Black Seed Oil" /></div>
-      <div class="gallery-tile"><img src="images/gallery-5.jpg" alt="KeiWai Masala Tea" /></div>
-      <div class="gallery-tile"><img src="images/gallery-6.jpg" alt="Honey" /></div>
+      <div class="gallery-tile"><img src="images/gallery-1.jpg" alt="Theta Premium Tea" /><span>Tea time, elevated</span></div>
+      <div class="gallery-tile"><img src="images/gallery-2.jpg" alt="Kagwe Premium Tea" /><span>Slow-steeped rituals</span></div>
+      <div class="gallery-tile"><img src="images/gallery-3.jpg" alt="Roasted Cashew Nuts" /><span>Pantry favourites</span></div>
+      <div class="gallery-tile"><img src="images/gallery-4.jpg" alt="Black Seed Oil" /><span>Everyday wellness</span></div>
+      <div class="gallery-tile"><img src="images/gallery-5.jpg" alt="KeiWai Masala Tea" /><span>Warm spice moments</span></div>
+      <div class="gallery-tile"><img src="images/gallery-6.jpg" alt="Honey" /><span>A little sweetness</span></div>
     </div>
   </section>
+
+  <section class="recipe-strip section-reveal">
+    <div class="section-row"><h3>Ideas for your kitchen</h3><a href="#products">Shop ingredients →</a></div>
+    <div class="recipe-grid"><article style="background-image:url('images/gallery-5.jpg')"><span>Masala tea moments</span></article><article style="background-image:url('images/gallery-3.jpg')"><span>Snack-board essentials</span></article><article style="background-image:url('images/gallery-4.jpg')"><span>Wellness pantry picks</span></article><article style="background-image:url('images/gallery-6.jpg')"><span>Sweeten the everyday</span></article></div>
+  </section>
+
+  <section class="gift-banner section-reveal"><div><p>THE THOUGHTFUL PANTRY</p><h3>Curated goods<br>for every table.</h3><span class="gift-banner__copy">A considered selection for hosts, heartfelt gifts and the everyday ritual of feeding people well.</span><a href="#products">SHOP THE COLLECTION</a></div><img src="images/gallery-1.jpg" alt="Premium tea from The Emporium" /></section>
+
+  <section class="testimonials section-reveal"><p>LOVED BY OUR CUSTOMERS</p><div><blockquote>“A reliable place for the teas and pantry staples our kitchen depends on.”<cite>— Nairobi customer</cite></blockquote><blockquote>“Straightforward ordering, great quality, and delivery that makes running a café easier.”<cite>— Local business owner</cite></blockquote><blockquote>“The product range keeps getting better. My go-to for spices and tea.”<cite>— Regular customer</cite></blockquote></div></section>
+
+  <section class="refill-banner section-reveal"><div><p>KEEP YOUR PANTRY STOCKED</p><h3>Restock<br>made easy.</h3><a id="refill-whatsapp" href="#" target="_blank" rel="noopener">MESSAGE US TO RESTOCK</a></div><div class="refill-steps"><h4>How it works</h4><ol><li>Choose what you need</li><li>Message your order</li><li>We pack and deliver</li></ol></div></section>
 
 </main>
 
@@ -180,6 +260,28 @@
     </div>
   </div>
 </footer>
+
+<!-- Product detail: populated from the live Firestore catalog by storefront.js -->
+<dialog id="product-dialog" class="product-dialog" aria-labelledby="product-dialog-title">
+  <article class="product-dialog__surface">
+    <button class="product-dialog__close" type="button" aria-label="Close product details">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div id="product-dialog-visual" class="product-dialog__visual"></div>
+    <div class="product-dialog__content">
+      <p id="product-dialog-category" class="product-dialog__category"></p>
+      <h2 id="product-dialog-title"></h2>
+      <p id="product-dialog-brand" class="product-dialog__brand" hidden></p>
+      <p id="product-dialog-price" class="product-dialog__price"></p>
+      <p id="product-dialog-unit" class="product-dialog__unit" hidden></p>
+      <p id="product-dialog-stock" class="product-dialog__stock"></p>
+      <a id="product-dialog-order" class="product-dialog__order" target="_blank" rel="noopener">
+        <span>Order this item on WhatsApp</span>
+        <span class="material-symbols-outlined">arrow_outward</span>
+      </a>
+    </div>
+  </article>
+</dialog>
 
 <script type="module" src="js/storefront.js"></script>
 </body>
