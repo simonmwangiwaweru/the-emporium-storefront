@@ -7,11 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Playfair+Display:opsz,wght@5..120,600;5..120,700;5..120,800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/site.css" />
+<link rel="stylesheet" href="css/reference-refresh.css" />
 </head>
 <body>
 
 <div class="promo-bar">
-  <span>Free delivery across Nairobi &amp; Kiambu</span>
+  <span><span class="material-symbols-outlined">local_shipping</span> Free delivery across Nairobi &amp; Kiambu</span>
   <span class="promo-bar__detail">Wholesale &amp; retail pantry goods</span>
 </div>
 
@@ -26,7 +27,7 @@
     <a href="#products">Teas</a>
     <a href="#products">Spices</a>
     <a href="#featured-grid">Best sellers</a>
-    <a href="#gallery">Recipes</a>
+    <a href="#gallery">Inspiration</a>
   </nav>
   <a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="topbar-whatsapp">
     <span class="material-symbols-outlined">chat</span>
@@ -42,12 +43,15 @@
     <div class="banner-overlay"></div>
     <div class="banner-content">
       <span class="banner-eyebrow">The Emporium pantry · Nairobi</span>
-      <h2 class="banner-title">Every ingredient<br><em>belongs in a story.</em></h2>
-      <p class="banner-sub">Exceptional teas, spices and pantry essentials, gathered for the meals, rituals and people you care about.</p>
-      <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="banner-cta">
-        <span>Start an order</span>
-        <span class="material-symbols-outlined">arrow_outward</span>
-      </a>
+      <h2 class="banner-title">Every meal has a story.<br><em>Make yours memorable.</em></h2>
+      <p class="banner-sub">Discover teas, spices and pantry essentials chosen to make everyday moments taste better.</p>
+      <div class="hero-actions">
+        <a id="hero-whatsapp" href="#" target="_blank" rel="noopener" class="banner-cta">
+          <span>Shop the pantry</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </a>
+        <a href="#collections" class="banner-cta banner-cta--secondary">Explore teas</a>
+      </div>
       <div class="banner-signature" aria-label="The Emporium promise">
         <span>Selected with care</span><i></i><span>For generous tables</span>
       </div>
@@ -72,8 +76,8 @@
   <!-- Category chips -->
   <section id="collections" class="collections-section">
     <div class="category-heading">
-      <p>Shop by table &amp; ritual</p>
-      <span>Good things, gathered well</span>
+      <p>A pantry worth exploring.</p>
+      <span>Shop all categories →</span>
     </div>
     <div id="collections-scroll" class="collections-scroll hide-scrollbar">
 
@@ -215,6 +219,18 @@
 
   <section class="refill-banner section-reveal"><div><p>KEEP YOUR PANTRY STOCKED</p><h3>Restock<br>made easy.</h3><a id="refill-whatsapp" href="#" target="_blank" rel="noopener">MESSAGE US TO RESTOCK</a></div><div class="refill-steps"><h4>How it works</h4><ol><li>Choose what you need</li><li>Message your order</li><li>We pack and deliver</li></ol></div></section>
 
+  <section class="newsletter" aria-labelledby="newsletter-title">
+    <div>
+      <span class="material-symbols-outlined">mark_email_unread</span>
+      <h3 id="newsletter-title">Good things belong in the pantry.</h3>
+      <p>New arrivals, useful ideas and no unnecessary emails.</p>
+    </div>
+    <form class="newsletter-form" action="#" onsubmit="return false">
+      <label class="sr-only" for="newsletter-email">Email address</label>
+      <input id="newsletter-email" type="email" placeholder="Enter your email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
 </main>
 
 <!-- Bottom nav (mobile) -->
