@@ -21,9 +21,6 @@ const gridCount = document.getElementById('grid-count');
 const featuredGrid = document.getElementById('featured-grid');
 const searchInput = document.getElementById('search-input');
 const collectionsScroll = document.getElementById('collections-scroll');
-const exploreCategories = document.getElementById('explore-categories');
-const categoryTransition = document.getElementById('category-transition');
-const categoryTitle = document.getElementById('category-title');
 const productDialog = document.getElementById('product-dialog');
 const dialogVisual = document.getElementById('product-dialog-visual');
 const dialogClose = productDialog.querySelector('.product-dialog__close');
@@ -44,37 +41,9 @@ let detailProduct = null;
 let detailSource = null;
 let detailFlight = null;
 let detailAnimation = null;
-let categoryTransitionRunning = false;
 
 function whatsappUrl(text) {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
-}
-
-const wait = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
-
-async function transitionToCategories(event) {
-  // Keyboard use remains immediate, as does the reduced-motion experience.
-  if (reduceMotion || event.detail === 0) return;
-  event.preventDefault();
-  if (categoryTransitionRunning) return;
-
-  categoryTransitionRunning = true;
-  categoryTransition.classList.remove('is-leaving');
-  categoryTransition.classList.add('is-active');
-  await wait(180);
-
-  const originalScrollBehavior = document.documentElement.style.scrollBehavior;
-  document.documentElement.style.scrollBehavior = 'auto';
-  document.getElementById('collections').scrollIntoView({ block: 'start' });
-  document.documentElement.style.scrollBehavior = originalScrollBehavior;
-  history.pushState(null, '', '#collections');
-  categoryTitle.focus({ preventScroll: true });
-
-  await wait(160);
-  categoryTransition.classList.add('is-leaving');
-  await wait(220);
-  categoryTransition.classList.remove('is-active', 'is-leaving');
-  categoryTransitionRunning = false;
 }
 
 // Wire every generic "message us" entry point (header, hero, bottom nav, footer)
@@ -389,8 +358,6 @@ collectionsScroll.addEventListener('click', (e) => {
   renderWithTransition();
   document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
-
-exploreCategories.addEventListener('click', transitionToCategories);
 
 searchInput.addEventListener('input', (e) => {
   searchTerm = e.target.value.trim().toLowerCase();
