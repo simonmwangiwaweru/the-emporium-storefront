@@ -211,7 +211,7 @@ function finishDetailClose() {
   detailSource?.style.removeProperty('opacity');
   dialogVisual.style.visibility = '';
   dialogVisual.replaceChildren();
-  productDialog.classList.remove('is-closing');
+  productDialog.classList.remove('is-opening', 'is-closing');
   if (productDialog.open) productDialog.close();
   document.body.classList.remove('product-dialog-open');
   const focusTarget = detailSource?.closest('.product-card');
@@ -226,7 +226,13 @@ async function openProductDetail(product, source, animate) {
   detailState = animate ? 'opening' : 'open';
   prepareDetail(product, source);
   document.body.classList.add('product-dialog-open');
+  if (animate) productDialog.classList.add('is-opening');
   productDialog.showModal();
+
+  if (animate) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    productDialog.classList.remove('is-opening');
+  }
 
   if (!animate) {
     dialogClose.focus();
@@ -355,7 +361,8 @@ collectionsScroll.addEventListener('click', (e) => {
 
 searchInput.addEventListener('input', (e) => {
   searchTerm = e.target.value.trim().toLowerCase();
-  renderWithTransition();
+  // Typing is high-frequency keyboard interaction, so results remain immediate.
+  render();
 });
 
 document.getElementById('nav-home').addEventListener('click', (e) => {
