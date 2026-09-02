@@ -896,7 +896,16 @@ body.product-dialog-open { overflow: hidden; }
 /* Gourmet-market direction: warm, layered merchandising inspired by a classic spice pantry. */
 body { --ink:#372313; --paper:#f7f0e3; --card:#fffaf1; --line:#dfd0b8; --paprika:#9e201b; --paprika-dark:#741714; --cardamom:#4b5920; --turmeric:#c68c28; background:var(--paper); }
 .promo-bar { height:28px; display:flex; align-items:center; justify-content:center; gap:24px; padding:0 16px; background:var(--paprika); color:#fff7e9; font:500 .59rem/1 var(--font-body); letter-spacing:.04em; }
-.topbar { top:28px; height:72px; background:#fffaf1; border-bottom:1px solid var(--line); padding:0 clamp(18px,4vw,64px); }
+.topbar {
+  /* Keep the primary navigation in the normal page flow. A fixed header here
+     obscures the hero while scrolling and makes the page feel visually heavy. */
+  position: relative;
+  top: auto;
+  height:72px;
+  background:#fffaf1;
+  border-bottom:1px solid var(--line);
+  padding:0 clamp(18px,4vw,64px);
+}
 .topbar-title { font-size:1.55rem; color:var(--ink); }
 .brand-kicker { color:var(--paprika); font-size:.5rem; }
 .desktop-nav { display:flex; align-items:center; gap:22px; margin-left:auto; margin-right:28px; }
@@ -904,7 +913,7 @@ body { --ink:#372313; --paper:#f7f0e3; --card:#fffaf1; --line:#dfd0b8; --paprika
 .desktop-nav a:hover { color:var(--paprika); }
 .topbar-whatsapp { width:36px; height:36px; padding:0; justify-content:center; background:transparent; color:var(--ink); border:1px solid var(--line); }
 .topbar-whatsapp__label { display:none; }
-main { padding-top:100px; }
+main { padding-top:0; }
 .banner { min-height:510px; padding:70px max(22px,calc((100vw - 1160px)/2)) 62px; background:#251409; }
 .banner-bg { opacity:.56; filter:saturate(.8) contrast(.9) brightness(.7); }
 .banner-overlay { background:linear-gradient(90deg,rgba(20,9,4,.76) 0%,rgba(20,9,4,.54) 39%,rgba(20,9,4,.08) 72%,rgba(20,9,4,.16) 100%); }
@@ -1015,6 +1024,6 @@ main { padding-top:100px; }
 .testimonials { padding-top:68px; padding-bottom:68px; }.testimonials blockquote { position:relative; }.testimonials blockquote::before { content:"“"; display:block; color:var(--turmeric); font:700 2.4rem/.5 var(--font-display); }
 @media (prefers-reduced-motion: reduce) { .banner-bg, .hero-products img, .trust-strip > div, .product-card, .product-photo img, .recipe-grid article::after, .gift-banner a, .refill-banner a { transition:opacity 160ms ease, background 160ms ease, color 160ms ease; transform:none !important; } }
 @media (max-width:760px) { .banner-signature { margin-top:20px; } .pantry-manifesto { min-height:0; margin:0 20px; padding:32px 0; grid-template-columns:1fr; gap:21px; } .pantry-manifesto__seal { width:92px; height:92px; } .pantry-manifesto > p { font-size:1.55rem; } .pantry-manifesto > a { padding-top:3px; } .recipe-strip { padding-top:44px; } }
-@media (max-width:760px){ .promo-bar__detail,.desktop-nav{display:none}.topbar{height:64px;top:28px}.topbar-title{font-size:1.35rem}main{padding-top:92px}.search-section{top:92px}.banner{min-height:470px;padding-top:60px}.banner-title{font-size:3.1rem}.trust-strip>div:nth-child(n+2){display:none}.category-heading span{display:none}.collections-scroll{justify-content:flex-start}.collection-card{width:76px}.collection-swatch{width:58px;height:58px}.gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,145px)}.featured-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:760px){ .promo-bar__detail,.desktop-nav{display:none}.topbar{height:64px;top:auto}.topbar-title{font-size:1.35rem}main{padding-top:0}.search-section{top:0}.banner{min-height:470px;padding-top:60px}.banner-title{font-size:3.1rem}.trust-strip>div:nth-child(n+2){display:none}.category-heading span{display:none}.collections-scroll{justify-content:flex-start}.collection-card{width:76px}.collection-swatch{width:58px;height:58px}.gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,145px)}.featured-grid{grid-template-columns:repeat(2,1fr)} }
 
 .hero-products{position:absolute;right:7%;bottom:24px;width:48%;height:82%;z-index:1}.hero-products img{position:absolute;object-fit:cover;background:#ead7af;box-shadow:0 20px 30px #12090488;border:5px solid #f6ead7}.hero-products img:nth-child(1){height:76%;width:29%;left:3%;bottom:0}.hero-products img:nth-child(2){height:58%;width:27%;left:31%;top:10%}.hero-products img:nth-child(3){height:48%;width:25%;right:9%;bottom:0}.hero-products img:nth-child(4){height:39%;width:25%;right:0;top:9%}.banner-content{z-index:2}.recipe-strip,.testimonials{max-width:1160px;margin:auto;padding:50px 20px}.section-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.section-row h3{font:700 1.7rem var(--font-display);margin:0}.section-row a,.gift-banner a,.refill-banner a{color:inherit;font:700 .65rem var(--font-body);letter-spacing:.06em;text-decoration:none}.recipe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.recipe-grid article{height:170px;background-size:cover;background-position:center;position:relative;display:flex;align-items:end;padding:14px;color:#fff;font:700 1rem var(--font-display)}.recipe-grid article:before{content:'';position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#251409d9)}.recipe-grid span{z-index:1}.gift-banner,.refill-banner{display:grid;grid-template-columns:1fr 1fr;max-width:1160px;margin:0 auto 50px;background:#901c18;color:#fff}.gift-banner>div,.refill-banner>div{padding:48px}.gift-banner p,.refill-banner p{font:.6rem var(--font-mono);letter-spacing:.12em}.gift-banner h3,.refill-banner h3{font:700 2.5rem/.95 var(--font-display);margin:12px 0 25px}.gift-banner img{width:100%;height:100%;object-fit:cover}.testimonials{text-align:center}.testimonials>p{font:.62rem var(--font-mono);letter-spacing:.12em}.testimonials>div{display:grid;grid-template-columns:repeat(3,1fr)}.testimonials blockquote{margin:15px;padding:0 20px;border-right:1px solid var(--line);font:600 1.1rem/1.4 var(--font-display)}.testimonials cite{display:block;margin-top:14px;font:.65rem var(--font-body);color:var(--muted)}.refill-banner{background:#3f521d}.refill-steps{background:#f8efdf;color:var(--ink)}.refill-steps h4{font:700 1.5rem var(--font-display);margin:0 0 18px}.refill-steps ol{padding-left:20px;margin:0;font-size:.82rem;line-height:2}@media(max-width:760px){.hero-products{opacity:.4;width:74%;right:-4%}.recipe-grid{grid-template-columns:repeat(2,1fr)}.gift-banner,.refill-banner{grid-template-columns:1fr}.gift-banner img{height:220px}.testimonials>div{grid-template-columns:1fr}.testimonials blockquote{border-right:0;border-bottom:1px solid var(--line)}}
