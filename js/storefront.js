@@ -3,7 +3,6 @@ import {
   collection,
   getDocs
 } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
-import { initParallax } from './parallax.js';
 import { initScrollReveal } from './reveal.js';
 
 const PHONE = '254794529421'; // 0794529421 with country code, no leading zero
@@ -379,6 +378,5 @@ productDialog.addEventListener('cancel', (event) => {
 });
 
 loadProducts();
-initParallax();
 initScrollReveal('.collection-card', { stagger: 50 });
 initScrollReveal('.section-reveal', { stagger: 60 });
