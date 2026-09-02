@@ -48,7 +48,7 @@ function whatsappUrl(text) {
 
 // Wire every generic "message us" entry point (header, hero, bottom nav, footer)
 const genericMessage = "Hi, I'd like to know more about your products.";
-['header-whatsapp', 'hero-whatsapp', 'nav-whatsapp', 'footer-whatsapp', 'refill-whatsapp'].forEach((id) => {
+['header-whatsapp', 'nav-whatsapp', 'footer-whatsapp', 'refill-whatsapp'].forEach((id) => {
   const el = document.getElementById(id);
   if (el) el.href = whatsappUrl(genericMessage);
 });
