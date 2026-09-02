@@ -1,0 +1,63 @@
+/* Final Emporium brand layer: a single light theme and brick-red actions. */
+:root {
+  color-scheme: light;
+  --paper: #fbfaf7;
+  --surface: #ffffff;
+  --surface-soft: #f4f1ec;
+  --ink: #202820;
+  --muted: #647066;
+  --line: #e2ded6;
+  --accent: #ad2b25;
+  --accent-dark: #881f1b;
+  --radius: 12px;
+}
+
+.site-header { background: rgba(251, 250, 247, .96); }
+.brand-lockup span,
+.desktop-nav a:hover,
+.text-link,
+.product-category { color: var(--accent); }
+.hero h1 em { color: #db675f; }
+.service-strip .material-symbols-outlined { color: var(--accent); }
+.newsletter { background: #26342a; }
+.newsletter .material-symbols-outlined { color: #db675f; }
+.site-footer { background: #202820; }
+.site-footer h2 { color: #db675f; }
+.collection-card.is-active { outline-color: var(--accent); }
+.product-card:focus-visible,
+.collection-card:focus-visible,
+a:focus-visible,
+input:focus-visible,
+button:focus-visible { outline-color: var(--accent); }
+
+.button,
+.header-order,
+.order-btn,
+.collection-card,
+.product-card {
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.button:active,
+.header-order:active,
+.order-btn:active,
+.collection-card:active { transform: scale(.98); }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #fbfaf7;
+    --surface: #ffffff;
+    --surface-soft: #f4f1ec;
+    --ink: #202820;
+    --muted: #647066;
+    --line: #e2ded6;
+    --accent: #ad2b25;
+    --accent-dark: #881f1b;
+  }
+
+  .site-header { background: rgba(251, 250, 247, .96); }
+  .header-order { border-color: var(--ink); }
+  .hero-scrim { background: linear-gradient(90deg, rgba(18, 23, 18, .94), rgba(18, 23, 18, .7) 43%, rgba(18, 23, 18, .12)); }
+  .product-skeleton { background: linear-gradient(110deg, #ece9e3 30%, #f6f4f0 45%, #ece9e3 60%); }
+  .service-strip, .story-section { background: #f4f1ec; }
+}
