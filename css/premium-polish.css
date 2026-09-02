@@ -1,0 +1,103 @@
+/* Product browsing polish: rounded imagery, clear categories, measured feedback. */
+
+.collection-swatch,
+.product-photo,
+.gallery-tile,
+.recipe-grid article,
+.gift-banner,
+.gift-banner img,
+.refill-banner,
+.refill-steps {
+  border-radius: 14px;
+}
+
+.collection-card {
+  border-radius: 14px;
+}
+
+.collections-section {
+  padding-bottom: 56px;
+}
+
+.category-heading::after {
+  content: "Browse by category";
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font: 400 .82rem/1.5 var(--font-body);
+}
+
+.collections-scroll {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.collection-card,
+.collection-card:nth-child(n+5) {
+  display: flex;
+  width: 100%;
+}
+
+.collection-label::after {
+  content: "Shop this category  →";
+}
+
+/* Hover is feedback for desktop pointers: image-only transform, 180ms ease. */
+.collection-swatch img,
+.product-photo img,
+.gallery-tile img,
+.recipe-grid article::after,
+.gift-banner img {
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .collection-card:hover .collection-swatch img,
+  .product-card:hover .product-photo img,
+  .gallery-tile:hover img,
+  .recipe-grid article:hover::after,
+  .gift-banner:hover img {
+    transform: scale(1.045);
+    filter: saturate(1.07) contrast(1.02);
+  }
+
+  .collection-card:hover,
+  .product-card:hover {
+    border-color: #c49a74;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-swatch img,
+  .product-photo img,
+  .gallery-tile img,
+  .recipe-grid article::after,
+  .gift-banner img {
+    transition: filter 160ms ease;
+  }
+}
+
+@media (max-width: 760px) {
+  .collections-scroll {
+    display: flex;
+  }
+
+  .collection-card,
+  .collection-card:nth-child(n+5) {
+    min-width: 210px;
+    width: 210px;
+  }
+
+  .collection-swatch,
+  .product-photo,
+  .gallery-tile,
+  .recipe-grid article,
+  .gift-banner,
+  .gift-banner img,
+  .refill-banner,
+  .refill-steps,
+  .collection-card {
+    border-radius: 12px;
+  }
+}
