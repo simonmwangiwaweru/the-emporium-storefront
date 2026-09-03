@@ -58,15 +58,15 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Scroll-triggered entrance ("fly in" once, on first load — see js/reveal.js) */
+/* Scroll-triggered entrance: content must remain readable if JavaScript or
+   IntersectionObserver is delayed or unavailable. */
 .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 1;
+  transform: none;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* Smooth crossfade when the product grid re-renders (category/search change). */
@@ -824,9 +824,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 98px; }
 .order-steps h4 { margin: 0 0 5px; color: var(--ink); font: 700 1.05rem/1.15 var(--font-display); letter-spacing: -.025em; }
 .order-steps p { margin: 0; max-width: 390px; color: var(--muted); font-size: .77rem; line-height: 1.55; }
 
-/* On-scroll reveals are one-time marketing cues; functional filtering remains immediate. */
-.section-reveal.reveal { opacity: 0; transform: translateY(14px); transition: opacity 300ms var(--ease-out, cubic-bezier(.23,1,.32,1)), transform 300ms var(--ease-out, cubic-bezier(.23,1,.32,1)); }
-.section-reveal.reveal.is-visible { opacity: 1; transform: translateY(0); }
+/* Essential sections stay visible; they must not depend on a scroll callback. */
+.section-reveal.reveal { opacity: 1; transform: none; }
+.section-reveal.reveal.is-visible { opacity: 1; transform: none; }
 @media (max-width: 680px) {
   .trust-strip { padding: 0; grid-template-columns: 1fr; }
   .trust-strip > div, .trust-strip > div:first-child { min-height: 64px; justify-content: flex-start; padding-left: 24px; border: 0; border-bottom: 1px solid rgba(24,55,45,.1); }

@@ -6,7 +6,10 @@ export function initScrollReveal(selector, { stagger = 40 } = {}) {
   const els = Array.from(document.querySelectorAll(selector));
   if (els.length === 0) return;
 
-  if (prefersReducedMotion) {
+  // Content must never depend on a motion API to be readable. Without an
+  // observer (or with reduced motion), leave elements in their normal,
+  // visible state rather than adding the class that starts them transparent.
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
     els.forEach((el) => el.classList.add('is-visible'));
     return;
   }
@@ -17,7 +20,7 @@ export function initScrollReveal(selector, { stagger = 40 } = {}) {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const index = els.indexOf(el);
-        setTimeout(() => el.classList.add('is-visible'), (index % 12) * stagger);
+        window.setTimeout(() => el.classList.add('is-visible'), (index % 12) * stagger);
         observer.unobserve(el);
       });
     },
@@ -25,7 +28,8 @@ export function initScrollReveal(selector, { stagger = 40 } = {}) {
   );
 
   els.forEach((el) => {
-    el.classList.add('reveal');
+    // Observe first. If setup ever fails, the element has not been hidden.
     observer.observe(el);
+    el.classList.add('reveal');
   });
 }

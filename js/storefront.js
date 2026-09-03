@@ -386,4 +386,6 @@ productDialog.addEventListener('cancel', (event) => {
 
 loadProducts();
 initScrollReveal('.collection-card', { stagger: 50 });
-initScrollReveal('.section-reveal', { stagger: 60 });
+
+// Whole sections contain essential page content. Keep them visible even if a
+// browser fails to deliver an observer callback; cards retain the subtle cue.
