@@ -507,7 +507,7 @@ main { padding-top: 60px; padding-bottom: 76px; }
 }
 .gate-box h1 { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--cardamom); margin: 0 0 4px; text-transform: uppercase; }
 .gate-sub { color: var(--muted); font-size: 0.85rem; margin: 0 0 16px; font-family: var(--font-mono); }
-#gate-form { display: flex; gap: 8px; }
+#gate-form { display: grid; gap: 8px; }
 .gate-input {
   flex: 1;
   border: 1px solid var(--line);
@@ -534,6 +534,9 @@ main { padding-top: 60px; padding-bottom: 76px; }
 }
 .admin-header h1 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin: 0; text-transform: uppercase; }
 .admin-header a { color: rgba(255,255,255,0.8); font-size: 0.75rem; text-decoration: none; }
+.admin-header-actions { display: flex; align-items: center; gap: 12px; }
+.admin-sign-out { appearance: none; border: 1px solid rgba(255,255,255,0.45); border-radius: 4px; background: transparent; color: #fff; font: inherit; font-size: 0.75rem; padding: 5px 8px; cursor: pointer; }
+.admin-sign-out:hover { background: rgba(255,255,255,0.12); }
 
 .admin-section { padding: 16px; max-width: 640px; margin: 0 auto; }
 .admin-section h2 {

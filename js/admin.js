@@ -1,4 +1,4 @@
-import { db } from './firebase-init.js';
+import { auth, db } from './firebase-init.js';
 import {
   collection,
   getDocs,
@@ -7,10 +7,12 @@ import {
   updateDoc,
   deleteDoc
 } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut
+} from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js';
 import { resizeImage } from './resize-image.js';
-
-// Not real security — see gate-note in admin.html.
-const PASSCODE = 'admin';
 
 const CATEGORY_LABELS = {
   teas: 'Teas',
@@ -22,9 +24,11 @@ const CATEGORY_LABELS = {
 
 const gate = document.getElementById('gate');
 const gateForm = document.getElementById('gate-form');
-const gateInput = document.getElementById('gate-input');
+const gateEmail = document.getElementById('gate-email');
+const gatePassword = document.getElementById('gate-password');
 const gateError = document.getElementById('gate-error');
 const dashboard = document.getElementById('dashboard');
+const signOutButton = document.getElementById('sign-out');
 
 const addForm = document.getElementById('add-form');
 const addStatus = document.getElementById('add-status');
@@ -34,24 +38,34 @@ const filterCategory = document.getElementById('filter-category');
 let allProducts = [];
 let currentFilter = 'all';
 
-function unlock() {
-  gate.hidden = true;
-  dashboard.hidden = false;
-  sessionStorage.setItem('emporium-admin-unlocked', '1');
-  loadProducts();
-}
-
-if (sessionStorage.getItem('emporium-admin-unlocked') === '1') {
-  unlock();
-}
-
 gateForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (gateInput.value === PASSCODE) {
+  gateError.hidden = true;
+  signInWithEmailAndPassword(auth, gateEmail.value.trim(), gatePassword.value)
+    .then(() => {
+      gatePassword.value = '';
+    })
+    .catch((err) => {
+      console.error(err);
+      gateError.hidden = false;
+    });
+});
+
+signOutButton.addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+  } catch (err) {
+    console.error(err);
+    alert('Could not sign out. Please try again.');
+  }
+});
+
+onAuthStateChanged(auth, (user) => {
+  gate.hidden = Boolean(user);
+  dashboard.hidden = !user;
+  if (user) {
     gateError.hidden = true;
-    unlock();
-  } else {
-    gateError.hidden = false;
+    loadProducts();
   }
 });
 

@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /products/{productId} {
       allow read: if true;
-      allow write: if true; // v1: passcode-gated admin.html is the only real gate; v1.5: swap to request.auth != null once real login is added
+      allow write: if request.auth != null;
     }
   }
 }

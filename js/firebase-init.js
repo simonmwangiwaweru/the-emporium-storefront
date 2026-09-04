@@ -2,6 +2,7 @@
 // CDN modular SDK, no bundler. Keep this version string in sync everywhere it's used.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDgK-uYz07OI8yir5AObQrN1VtBlMZ1eMQ",
@@ -14,3 +15,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const auth = getAuth(app);

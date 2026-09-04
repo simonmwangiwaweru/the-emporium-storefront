@@ -13,13 +13,14 @@
   <section id="gate" class="gate">
     <div class="gate-box">
       <h1>THE EMPORIUM</h1>
-      <p class="gate-sub">Admin — enter passcode</p>
+      <p class="gate-sub">Admin sign in</p>
       <form id="gate-form">
-        <input type="password" id="gate-input" class="gate-input" placeholder="Passcode" autocomplete="off" />
-        <button type="submit" class="btn-primary">Enter</button>
+        <input type="email" id="gate-email" class="gate-input" placeholder="Email address" autocomplete="email" required />
+        <input type="password" id="gate-password" class="gate-input" placeholder="Password" autocomplete="current-password" required />
+        <button type="submit" class="btn-primary">Sign in</button>
       </form>
-      <p id="gate-error" class="gate-error" hidden>Wrong passcode.</p>
-      <p class="gate-note">Note: this passcode is a basic gate, not real security. Don't share this URL widely without upgrading to real login first.</p>
+      <p id="gate-error" class="gate-error" hidden>We could not sign you in. Check your email and password.</p>
+      <p class="gate-note">Only authorised Emporium staff can manage the catalogue.</p>
       <a class="gate-back" href="index.html">&larr; Back to storefront</a>
     </div>
   </section>
@@ -27,7 +28,7 @@
   <div id="dashboard" hidden>
     <header class="admin-header">
       <h1>THE EMPORIUM — Admin</h1>
-      <a href="index.html">View storefront</a>
+      <div class="admin-header-actions"><a href="index.html">View storefront</a><button id="sign-out" type="button" class="admin-sign-out">Sign out</button></div>
     </header>
 
     <section class="admin-section">
