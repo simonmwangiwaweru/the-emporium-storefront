@@ -35,9 +35,22 @@ const addStatus = document.getElementById('add-status');
 const productList = document.getElementById('product-list');
 const filterCategory = document.getElementById('filter-category');
 const adminProductCount = document.getElementById('admin-product-count');
+const editDialog = document.getElementById('edit-dialog');
+const editForm = document.getElementById('edit-form');
+const editClose = document.getElementById('edit-close');
+const editCancel = document.getElementById('edit-cancel');
+const editStatus = document.getElementById('edit-status');
+const editName = document.getElementById('e-name');
+const editBrand = document.getElementById('e-brand');
+const editCategory = document.getElementById('e-category');
+const editPrice = document.getElementById('e-price');
+const editUnit = document.getElementById('e-unit');
+const editPhoto = document.getElementById('e-photo');
+const editStock = document.getElementById('e-stock');
 
 let allProducts = [];
 let currentFilter = 'all';
+let editingProduct = null;
 
 gateForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -176,6 +189,13 @@ function buildRow(product) {
   stockLabel.appendChild(document.createTextNode(' In stock'));
   row.appendChild(stockLabel);
 
+  const editBtn = document.createElement('button');
+  editBtn.type = 'button';
+  editBtn.className = 'btn-edit';
+  editBtn.textContent = 'Edit';
+  editBtn.addEventListener('click', () => openEditor(product));
+  row.appendChild(editBtn);
+
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
   deleteBtn.className = 'btn-danger';
@@ -200,6 +220,69 @@ function flash(el) {
   el.classList.add('is-saved');
   setTimeout(() => el.classList.remove('is-saved'), 600);
 }
+
+function openEditor(product) {
+  editingProduct = product;
+  editForm.reset();
+  editName.value = product.name || '';
+  editBrand.value = product.brand || '';
+  editCategory.value = product.category || 'spices';
+  editPrice.value = product.price || '';
+  editUnit.value = product.unit || '';
+  editStock.checked = product.inStock !== false;
+  editStatus.textContent = '';
+  editDialog.showModal();
+  editName.focus();
+}
+
+function closeEditor() {
+  editDialog.close();
+  editingProduct = null;
+}
+
+editClose.addEventListener('click', closeEditor);
+editCancel.addEventListener('click', closeEditor);
+editDialog.addEventListener('cancel', () => {
+  editingProduct = null;
+});
+editDialog.addEventListener('click', (event) => {
+  if (event.target === editDialog) closeEditor();
+});
+
+editForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!editingProduct) return;
+
+  const name = editName.value.trim();
+  const category = editCategory.value;
+  if (!name || !category) {
+    editStatus.textContent = 'Name and category are required.';
+    return;
+  }
+
+  editStatus.textContent = 'Saving changes…';
+  try {
+    const updates = {
+      name,
+      brand: editBrand.value.trim() || null,
+      category,
+      price: editPrice.value.trim() || null,
+      unit: editUnit.value.trim() || null,
+      inStock: editStock.checked
+    };
+    const photoFile = editPhoto.files[0];
+    if (photoFile) updates.image = await resizeImage(photoFile, 800);
+
+    await updateDoc(doc(db, 'products', editingProduct.id), updates);
+    Object.assign(editingProduct, updates);
+    addStatus.textContent = `Updated "${name}".`;
+    closeEditor();
+    renderList();
+  } catch (err) {
+    console.error(err);
+    editStatus.textContent = 'Could not save changes. Please try again.';
+  }
+});
 
 addForm.addEventListener('submit', async (e) => {
   e.preventDefault();

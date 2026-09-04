@@ -61,6 +61,25 @@
     </main>
   </div>
 
+  <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-dialog-title">
+    <form id="edit-form" class="edit-dialog__surface">
+      <div class="edit-dialog__header">
+        <div><p class="admin-kicker">Product editor</p><h2 id="edit-dialog-title">Edit product</h2></div>
+        <button id="edit-close" type="button" class="edit-dialog__close" aria-label="Close editor"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+      </div>
+      <div class="edit-form-grid">
+        <label class="field field--wide"><span>Product name</span><input type="text" id="e-name" required /></label>
+        <label class="field"><span>Brand or supplier <i>Optional</i></span><input type="text" id="e-brand" /></label>
+        <label class="field"><span>Category</span><select id="e-category" required><option value="teas">Teas</option><option value="coffeehoney">Coffee &amp; Honey</option><option value="oils">Oils &amp; Tonics</option><option value="saltnuts">Salt, Nuts &amp; Botanicals</option><option value="spices">Spices &amp; Dry Goods</option></select></label>
+        <label class="field"><span>Price <i>Optional</i></span><input type="text" id="e-price" placeholder="e.g. KES 650" /></label>
+        <label class="field"><span>Pack size or unit</span><input type="text" id="e-unit" placeholder="e.g. per kg or 120g pack" /></label>
+        <label class="field field--wide field--file"><span>Replace product photo <i>Optional</i></span><input type="file" id="e-photo" accept="image/*" capture="environment" /><small>Leave this blank to keep the existing photo.</small></label>
+        <label class="edit-stock"><input type="checkbox" id="e-stock" /><span>Product is in stock</span></label>
+      </div>
+      <div class="edit-dialog__actions"><p id="edit-status" class="add-status" aria-live="polite"></p><button id="edit-cancel" type="button" class="btn-secondary">Cancel</button><button type="submit" class="btn-primary">Save changes</button></div>
+    </form>
+  </dialog>
+
   <script type="module" src="js/admin.js"></script>
 </body>
 </html>

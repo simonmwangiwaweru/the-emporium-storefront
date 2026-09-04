@@ -771,7 +771,7 @@ main { padding-top: 76px; }
 .admin-filter select { min-height: 40px; padding: 8px 34px 8px 11px; border: 1px solid #d8d2c4; border-radius: 8px; background: #fffdf8; color: #18372d; font: 500 .82rem/1 var(--font-body); }
 .product-list-shell { overflow: hidden; border: 1px solid #d8d2c4; border-radius: 14px; background: #fffdf8; box-shadow: 0 12px 32px rgba(24,55,45,.04); }
 .product-list { gap: 0; }
-.product-row { display: grid; grid-template-columns: 52px minmax(180px, 1fr) minmax(125px, 150px) auto auto; gap: 16px; min-height: 76px; padding: 12px 16px; border: 0; border-radius: 0; border-bottom: 1px solid #ebe5da; background: transparent; }
+.product-row { display: grid; grid-template-columns: 52px minmax(180px, 1fr) minmax(125px, 150px) auto auto auto; gap: 16px; min-height: 76px; padding: 12px 16px; border: 0; border-radius: 0; border-bottom: 1px solid #ebe5da; background: transparent; }
 .product-row:last-child { border-bottom: 0; }
 .product-row:hover { background: #faf8f2; }
 .row-thumb { width: 52px; height: 52px; border-radius: 8px; font: 500 .6rem/1.25 var(--font-body); }
@@ -783,6 +783,8 @@ main { padding-top: 76px; }
 .row-stock input { accent-color: #315c47; width: 16px; height: 16px; }
 .btn-danger { align-self: center; border-radius: 7px; padding: 9px 11px; background: transparent; border: 1px solid #d9b7ad; color: #8f321e; font: 600 .74rem/1 var(--font-body); transition: color .18s ease, background .18s ease; }
 .btn-danger:hover { background: #8f321e; color: #fff; }
+.btn-edit { align-self: center; min-height: 36px; padding: 0 13px; border: 1px solid #e9b071; border-radius: 8px; background: #fffaf2; color: #9a4700; font: 700 .72rem/1 var(--font-mono); cursor: pointer; }
+.btn-edit:hover { background: #fff0dd; border-color: #d86b12; }
 .status-message { margin: 0; padding: 38px 20px; color: #77796d; text-align: center; font: 400 .9rem/1.4 var(--font-body); }
 
 @media (max-width: 700px) {
@@ -803,6 +805,8 @@ main { padding-top: 76px; }
   .row-price-input { grid-column: 2; width: 100%; }
   .row-stock { grid-column: 3; grid-row: 2; }
   .btn-danger { grid-column: 3; grid-row: 1; }
+  .btn-edit { grid-column: 2; grid-row: 3; justify-self: start; }
+  .btn-danger { grid-row: 3; }
 }
 .banner {
   min-height: min(660px, calc(100svh - 76px)); padding: clamp(70px, 11vw, 145px) clamp(20px, 9vw, 145px) 58px;
