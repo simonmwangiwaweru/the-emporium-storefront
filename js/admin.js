@@ -34,6 +34,7 @@ const addForm = document.getElementById('add-form');
 const addStatus = document.getElementById('add-status');
 const productList = document.getElementById('product-list');
 const filterCategory = document.getElementById('filter-category');
+const adminProductCount = document.getElementById('admin-product-count');
 
 let allProducts = [];
 let currentFilter = 'all';
@@ -91,6 +92,7 @@ async function loadProducts() {
 
 function renderList() {
   productList.innerHTML = '';
+  adminProductCount.textContent = allProducts.length;
   const filtered = allProducts.filter(
     (p) => currentFilter === 'all' || p.category === currentFilter
   );
