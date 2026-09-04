@@ -1,0 +1,75 @@
+/* The Emporium brand layer: vivid spice-orange canvas with a restrained pantry texture. */
+:root {
+  --emporium-orange: #f97800;
+  --emporium-orange-deep: #dc6100;
+  --emporium-forest: #1f482d;
+  --emporium-cream: #fff9ef;
+  --emporium-ink: #183424;
+}
+
+body {
+  background-color: var(--emporium-orange);
+  background-image:
+    linear-gradient(rgba(249,120,0,.93), rgba(249,120,0,.93)),
+    url("../images/pantry-hero.jpg");
+  background-size: auto, 720px auto;
+  background-repeat: repeat, repeat;
+  background-attachment: fixed, fixed;
+  background-position: center, center top;
+}
+
+/* Storefront */
+.promo-bar { background: var(--emporium-forest); }
+.site-header { background: rgba(255, 249, 239, .96); border-bottom-color: rgba(31, 72, 45, .16); }
+.brand-lockup strong { color: var(--emporium-forest); }
+.desktop-nav a:hover, .text-link, .product-category, .brand-lockup span { color: var(--emporium-orange-deep); }
+.header-order { border-color: var(--emporium-forest); color: var(--emporium-forest); }
+.header-order:hover { background: var(--emporium-forest); }
+.hero-scrim { background: linear-gradient(90deg, rgba(31, 72, 45, .94), rgba(31, 72, 45, .7) 42%, rgba(249, 120, 0, .16)); }
+.hero h1 em { color: #ffd287; }
+.button-primary, .order-btn, .product-dialog__content a { background: var(--emporium-orange); }
+.button-primary:hover, .order-btn:hover, .product-dialog__content a:hover { background: var(--emporium-orange-deep); }
+.section { padding: 62px clamp(22px, 4vw, 46px); background: rgba(255, 249, 239, .96); border: 1px solid rgba(255,255,255,.42); border-radius: 16px; box-shadow: 0 18px 42px rgba(110, 55, 0, .11); }
+.category-section { margin-top: 54px; }
+.featured-section, .products-section, .inspiration-section { margin-top: 24px; }
+.section-reveal { opacity: 1; transform: none; }
+.service-strip { margin-top: 24px; background: rgba(31, 72, 45, .97); border: 0; color: #fff; box-shadow: 0 18px 42px rgba(110, 55, 0, .13); }
+.service-strip > div { border-color: rgba(255,255,255,.18); }
+.service-strip .material-symbols-outlined { color: #ffd287; }
+.service-strip p { color: rgba(255,255,255,.74); }
+.story-section { margin: 24px auto; background: var(--emporium-forest); box-shadow: 0 18px 42px rgba(110, 55, 0, .13); }
+.story-copy h2 { color: #fff; }
+.story-copy p { color: rgba(255,255,255,.78); }
+.story-copy .button-quiet { border-color: rgba(255,255,255,.7); }
+.product-card, .inspiration-grid article { border-color: #ead9bd; background: #fffefa; }
+.collection-card.is-active { outline-color: var(--emporium-orange); }
+.newsletter { margin-top: 24px; background: var(--emporium-forest); border: 1px solid rgba(255,255,255,.14); }
+.newsletter .material-symbols-outlined, .site-footer h2 { color: #ffd287; }
+.site-footer { margin-top: 50px; background: #173a25; }
+
+/* Catalogue manager */
+#dashboard { background: transparent; }
+.admin-header { background: var(--emporium-forest); }
+.admin-intro { padding: clamp(28px, 5vw, 54px); border: 0; border-radius: 16px; color: #fff; background: linear-gradient(135deg, rgba(249,120,0,.98), rgba(232,96,0,.96)); box-shadow: 0 20px 46px rgba(110, 55, 0, .18); }
+.admin-intro h1 { color: #fff; }
+.admin-intro > div > p:last-child { color: rgba(255,255,255,.86); }
+.admin-intro .admin-kicker { color: #fff1cd; }
+.admin-summary { border-left-color: #fff1cd; background: rgba(255,255,255,.16); }
+.admin-summary small { color: rgba(255,255,255,.82); }
+.admin-section--create, .admin-section--products { padding: clamp(24px, 4vw, 40px); margin-top: 24px; border-radius: 16px; background: rgba(255,249,239,.97); box-shadow: 0 18px 42px rgba(110, 55, 0, .12); }
+.admin-section--create { padding-bottom: clamp(24px, 4vw, 40px); }
+.admin-section--products { padding-bottom: clamp(24px, 4vw, 40px); }
+.section-heading h2 { color: var(--emporium-forest); }
+.admin-kicker { color: var(--emporium-orange-deep); }
+.btn-primary { background: var(--emporium-orange); }
+.btn-primary:hover { background: var(--emporium-orange-deep); }
+.product-list-shell { background: #fffefa; }
+.row-price-input:focus, .admin-filter select:focus, .add-form input:focus, .add-form select:focus { border-color: var(--emporium-orange-deep); box-shadow: 0 0 0 3px rgba(249,120,0,.18); }
+
+@media (max-width: 800px) {
+  .section { width: calc(100% - 28px); padding: 42px 20px; }
+  .category-section { margin-top: 28px; }
+  .featured-section, .products-section, .inspiration-section, .service-strip, .story-section, .newsletter { margin-top: 16px; }
+  .admin-section--create, .admin-section--products { margin-top: 16px; }
+  .admin-intro { border-radius: 12px; }
+}
