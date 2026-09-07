@@ -32,10 +32,10 @@ const signOutButton = document.getElementById('sign-out');
 
 const addForm = document.getElementById('add-form');
 const addStatus = document.getElementById('add-status');
-const publishPreparedButton = document.getElementById('publish-prepared');
-const preparedStatus = document.getElementById('prepared-status');
 const productList = document.getElementById('product-list');
 const filterCategory = document.getElementById('filter-category');
+const productSearchForm = document.getElementById('product-search-form');
+const productSearch = document.getElementById('product-search');
 const adminProductCount = document.getElementById('admin-product-count');
 const editDialog = document.getElementById('edit-dialog');
 const editForm = document.getElementById('edit-form');
@@ -52,48 +52,8 @@ const editStock = document.getElementById('e-stock');
 
 let allProducts = [];
 let currentFilter = 'all';
+let currentSearch = '';
 let editingProduct = null;
-
-// Files in /images are deployed with the website, so these catalogue entries do
-// not require manually uploading every photo through the browser. Keep this list
-// duplicate-safe: rerunning it only fills missing records or missing photos.
-const PREPARED_PRODUCTS = [
-  { name: 'Tea Leaves', category: 'teas', price: 'KES 350', unit: 'per kg' },
-  { name: 'Soya', category: 'saltnuts', price: 'KES 350', unit: 'per kg', image: 'images/soya.jpg' },
-  { name: 'Cinnamon', category: 'spices', price: 'KES 1100', unit: 'per kg', image: 'images/cinnamon.jpg' },
-  { name: 'Rosemary', category: 'spices', price: 'KES 1000', unit: 'per kg', image: 'images/rosemary.jpg' },
-  { name: 'Pilau Masala', category: 'spices', price: 'KES 1000', unit: 'per kg', image: 'images/pilau-masala.jpg' },
-  { name: 'Moringa', category: 'teas', price: 'KES 1200', unit: 'per kg', image: 'images/moringa.jpg' },
-  { name: 'Black Pepper', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/black-pepper.jpg' },
-  { name: 'Chia Seeds', category: 'saltnuts', price: 'KES 1200', unit: 'per kg', image: 'images/chia-seeds.jpg' },
-  { name: 'Cumin', category: 'spices', price: 'KES 1600', unit: 'per kg', image: 'images/cumin.jpg' },
-  { name: 'Cayenne', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/cayenne-powder.jpg' },
-  { name: 'Paprika', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/paprika.jpg' },
-  { name: 'Curry Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/curry-powder.jpg' },
-  { name: 'Garam Masala', category: 'spices', price: 'KES 1500', unit: 'per kg', image: 'images/garam-masala.jpg' },
-  { name: 'Onion Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/onion-powder.jpg' },
-  { name: 'Garlic Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/garlic-powder.jpg' },
-  { name: 'Citric Acid', category: 'spices', price: 'KES 800', unit: 'per kg', image: 'images/citric-acid.jpg' },
-  { name: 'Dates', category: 'saltnuts', price: 'KES 900', unit: 'per kg', image: 'images/dates.jpg' },
-  { name: 'Green Indian Pumpkin Seeds', category: 'saltnuts', price: 'KES 1500', unit: 'per kg', image: 'images/green-indian-pumpkin-seeds.jpg' },
-  { name: 'Popcorn Seeds', category: 'saltnuts', price: 'KES 350', unit: 'per kg', image: 'images/popcorn-seeds.jpg' },
-  { name: 'Hibiscus Flowers', category: 'teas', price: 'KES 1600', unit: 'per kg', image: 'images/hibiscus-flowers.jpg' },
-  { name: 'Hibiscus Powder', category: 'teas', price: 'KES 1600', unit: 'per kg', image: 'images/hibiscus-powder.jpg' },
-  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 200', unit: '500g pack' },
-  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 100', unit: '250g pack' },
-  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 40', unit: '100g pack' }
-];
-
-const PREPARED_PHOTO_UPDATES = [
-  { name: 'Cloves', image: 'images/cloves.jpg' },
-  { name: 'Turmeric', image: 'images/turmeric.jpg' },
-  { name: 'Dried Golden Raisins', image: 'images/dried-golden-raisins.jpg' },
-  { name: 'Fry Ums', image: 'images/fry-ums.jpg' }
-];
-
-function productKey(product) {
-  return `${(product.name || '').trim().toLowerCase()}|${(product.unit || '').trim().toLowerCase()}`;
-}
 
 gateForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -131,6 +91,17 @@ filterCategory.addEventListener('change', () => {
   renderList();
 });
 
+productSearchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  currentSearch = productSearch.value.trim().toLowerCase();
+  renderList();
+});
+
+productSearch.addEventListener('input', () => {
+  currentSearch = productSearch.value.trim().toLowerCase();
+  renderList();
+});
+
 async function loadProducts() {
   try {
     const snap = await getDocs(collection(db, 'products'));
@@ -149,14 +120,19 @@ async function loadProducts() {
 function renderList() {
   productList.innerHTML = '';
   adminProductCount.textContent = allProducts.length;
-  const filtered = allProducts.filter(
-    (p) => currentFilter === 'all' || p.category === currentFilter
-  );
+  const filtered = allProducts.filter((product) => {
+    const matchesCategory = currentFilter === 'all' || product.category === currentFilter;
+    const searchableText = [product.name, product.brand, product.category, product.price, product.unit]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    return matchesCategory && searchableText.includes(currentSearch);
+  });
 
   if (filtered.length === 0) {
     const msg = document.createElement('p');
     msg.className = 'status-message';
-    msg.textContent = 'No products in this category.';
+    msg.textContent = currentSearch ? 'No products match that search.' : 'No products in this category.';
     productList.appendChild(msg);
     return;
   }
@@ -379,7 +355,7 @@ addForm.addEventListener('submit', async (e) => {
   }
 });
 
-publishPreparedButton.addEventListener('click', async () => {
+/* One-time catalogue publisher removed after the initial catalogue publication.
   if (!confirm('Publish the prepared products and attach the supplied photos? Existing matching products will be skipped.')) return;
 
   publishPreparedButton.disabled = true;
@@ -427,3 +403,4 @@ publishPreparedButton.addEventListener('click', async () => {
     publishPreparedButton.disabled = false;
   }
 });
+*/

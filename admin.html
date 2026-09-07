@@ -52,14 +52,10 @@
           <label class="field field--wide field--file"><span>Product photo <i>Optional</i></span><input type="file" id="f-photo" accept="image/*" capture="environment" /><small>Images are resized automatically before upload.</small></label>
           <div class="form-actions"><button type="submit" class="btn-primary">Add product</button><p id="add-status" class="add-status" aria-live="polite"></p></div>
         </form>
-        <div class="prepared-import">
-          <div><p class="admin-kicker">Prepared catalogue update</p><h3>Publish the supplied products</h3><p>Adds the confirmed wholesale listings, attaches the images already in this project, and fills photos for existing listings that were missing them. Safe to run again: it skips products already published.</p></div>
-          <div class="prepared-import__actions"><button id="publish-prepared" type="button" class="btn-secondary">Publish prepared products</button><p id="prepared-status" class="add-status" aria-live="polite"></p></div>
-        </div>
       </section>
 
       <section class="admin-section admin-section--products" aria-labelledby="products-title">
-        <div class="section-heading section-heading--products"><div><p class="admin-kicker">Live catalogue</p><h2 id="products-title">Products</h2></div><label class="admin-filter"><span>Show</span><select id="filter-category"><option value="all">All categories</option><option value="teas">Teas</option><option value="coffeehoney">Coffee &amp; Honey</option><option value="oils">Oils &amp; Tonics</option><option value="saltnuts">Salt, Nuts &amp; Botanicals</option><option value="spices">Spices &amp; Dry Goods</option></select></label></div>
+        <div class="section-heading section-heading--products"><div><p class="admin-kicker">Live catalogue</p><h2 id="products-title">Products</h2></div><div class="catalogue-tools"><form id="product-search-form" class="admin-search" role="search"><label for="product-search">Search products</label><input id="product-search" type="search" placeholder="Search products" autocomplete="off" /><button type="submit" class="btn-secondary">Search</button></form><label class="admin-filter"><span>Show</span><select id="filter-category"><option value="all">All categories</option><option value="teas">Teas</option><option value="coffeehoney">Coffee &amp; Honey</option><option value="oils">Oils &amp; Tonics</option><option value="saltnuts">Salt, Nuts &amp; Botanicals</option><option value="spices">Spices &amp; Dry Goods</option></select></label></div></div>
         <div class="product-list-shell"><div id="product-list" class="product-list"><p class="status-message">Loading products&hellip;</p></div></div>
       </section>
     </main>
