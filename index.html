@@ -14,11 +14,14 @@
   <link rel="stylesheet" href="css/orange-brand-layer.css">
 </head>
 <body>
-  <div class="promo-bar"><span><span class="material-symbols-outlined">local_shipping</span> Free delivery across Kenya</span><span>Wholesale and retail pantry goods</span></div>
+  <div class="promo-bar"><span><span class="material-symbols-outlined">local_shipping</span> Free delivery across Kenya</span></div>
   <header class="site-header">
     <a class="brand-lockup" href="#top" aria-label="The Emporium home"><strong>The Emporium</strong></a>
-    <nav class="desktop-nav" aria-label="Primary navigation"><a href="#collections">Shop</a><a href="#products">Teas</a><a href="#products">Spices</a><a href="#featured">Best sellers</a><a href="#inspiration">Inspiration</a></nav>
-    <div class="header-actions"><a id="nav-search" href="#products" aria-label="Search the catalogue"><span class="material-symbols-outlined">search</span></a><a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="header-order">Order on WhatsApp</a></div>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <div class="shop-menu"><button id="shop-menu-toggle" type="button" aria-expanded="false" aria-controls="shop-menu-panel">Shop <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div id="shop-menu-panel" class="shop-menu-panel" hidden><a href="#products" data-nav-category="all">Shop all</a><a href="#products" data-nav-category="teas">Teas</a><a href="#products" data-nav-category="coffeehoney">Coffee &amp; Honey</a><a href="#products" data-nav-category="oils">Oils &amp; Tonics</a><a href="#products" data-nav-category="saltnuts">Salt, Nuts &amp; Botanicals</a><a href="#products" data-nav-category="spices">Spices &amp; Dry Goods</a></div></div>
+      <a href="#featured">Best sellers</a><a id="nav-wholesale" href="#" target="_blank" rel="noopener">Wholesale</a>
+    </nav>
+    <div class="header-actions"><form id="header-search-form" class="header-search" role="search"><label class="sr-only" for="header-search-input">Search the catalogue</label><span class="material-symbols-outlined" aria-hidden="true">search</span><input id="header-search-input" type="search" placeholder="Search products" autocomplete="off" /><button type="submit">Search</button></form><a id="header-whatsapp" href="#" target="_blank" rel="noopener" class="header-order">Order on WhatsApp</a></div>
   </header>
   <main id="top">
     <section class="hero" aria-labelledby="hero-title"><img class="hero-fallback" src="images/pantry-hero.jpg" alt="Tea, honey and spices on a pantry table" fetchpriority="high"><video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="images/pantry-hero.jpg" aria-hidden="true"><source src="images/emporium-hero-v2.mp4" type="video/mp4"></video><div class="hero-scrim"></div><div class="hero-copy"><h1 id="hero-title">Every meal has a story.<br><em>Make yours memorable.</em></h1><p>Teas, spices and pantry essentials chosen for everyday cooking and generous tables.</p><div class="hero-actions"><a href="#products" class="button button-primary">Shop the pantry <span>→</span></a><a href="#collections" class="button button-quiet">Explore categories</a></div></div></section>

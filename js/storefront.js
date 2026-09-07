@@ -20,6 +20,10 @@ const grid = document.getElementById('product-grid');
 const gridCount = document.getElementById('grid-count');
 const featuredGrid = document.getElementById('featured-grid');
 const searchInput = document.getElementById('search-input');
+const headerSearchForm = document.getElementById('header-search-form');
+const headerSearchInput = document.getElementById('header-search-input');
+const shopMenuToggle = document.getElementById('shop-menu-toggle');
+const shopMenuPanel = document.getElementById('shop-menu-panel');
 const collectionsScroll = document.getElementById('collections-scroll');
 const productDialog = document.getElementById('product-dialog');
 const dialogVisual = document.getElementById('product-dialog-visual');
@@ -52,6 +56,11 @@ const genericMessage = "Hi, I'd like to know more about your products.";
   const el = document.getElementById(id);
   if (el) el.href = whatsappUrl(genericMessage);
 });
+
+const wholesaleLink = document.getElementById('nav-wholesale');
+if (wholesaleLink) {
+  wholesaleLink.href = whatsappUrl("Hi, I'd like to ask about wholesale prices.");
+}
 
 function matchesFilters(product) {
   const inCategory = currentCategory === 'all' || product.category === currentCategory;
@@ -360,18 +369,62 @@ collectionsScroll.addEventListener('click', (e) => {
 });
 
 searchInput.addEventListener('input', (e) => {
-  searchTerm = e.target.value.trim().toLowerCase();
-  // Typing is high-frequency keyboard interaction, so results remain immediate.
+  applySearch(e.target.value);
+});
+
+function applySearch(value) {
+  const query = value.trim();
+  searchTerm = query.toLowerCase();
+  searchInput.value = query;
+  headerSearchInput.value = query;
   render();
+}
+
+function showCategory(category) {
+  currentCategory = category;
+  renderWithTransition();
+  document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+headerSearchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  applySearch(headerSearchInput.value);
+  document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+headerSearchInput.addEventListener('input', () => applySearch(headerSearchInput.value));
+
+shopMenuToggle.addEventListener('click', () => {
+  const isOpen = shopMenuToggle.getAttribute('aria-expanded') === 'true';
+  shopMenuToggle.setAttribute('aria-expanded', String(!isOpen));
+  shopMenuPanel.hidden = isOpen;
+});
+
+shopMenuPanel.addEventListener('click', (event) => {
+  const categoryLink = event.target.closest('[data-nav-category]');
+  if (!categoryLink) return;
+  event.preventDefault();
+  shopMenuPanel.hidden = true;
+  shopMenuToggle.setAttribute('aria-expanded', 'false');
+  showCategory(categoryLink.dataset.navCategory);
+});
+
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.shop-menu')) {
+    shopMenuPanel.hidden = true;
+    shopMenuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  shopMenuPanel.hidden = true;
+  shopMenuToggle.setAttribute('aria-expanded', 'false');
 });
 
 document.getElementById('nav-home').addEventListener('click', (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-document.getElementById('nav-search').addEventListener('click', () => {
-  setTimeout(() => searchInput.focus(), 400);
 });
 
 dialogClose.addEventListener('click', () => closeProductDetail(true));
