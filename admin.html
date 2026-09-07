@@ -52,6 +52,10 @@
           <label class="field field--wide field--file"><span>Product photo <i>Optional</i></span><input type="file" id="f-photo" accept="image/*" capture="environment" /><small>Images are resized automatically before upload.</small></label>
           <div class="form-actions"><button type="submit" class="btn-primary">Add product</button><p id="add-status" class="add-status" aria-live="polite"></p></div>
         </form>
+        <div class="prepared-import">
+          <div><p class="admin-kicker">Prepared catalogue update</p><h3>Publish the supplied products</h3><p>Adds the confirmed wholesale listings, attaches the images already in this project, and fills photos for existing listings that were missing them. Safe to run again: it skips products already published.</p></div>
+          <div class="prepared-import__actions"><button id="publish-prepared" type="button" class="btn-secondary">Publish prepared products</button><p id="prepared-status" class="add-status" aria-live="polite"></p></div>
+        </div>
       </section>
 
       <section class="admin-section admin-section--products" aria-labelledby="products-title">

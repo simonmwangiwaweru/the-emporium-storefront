@@ -32,6 +32,8 @@ const signOutButton = document.getElementById('sign-out');
 
 const addForm = document.getElementById('add-form');
 const addStatus = document.getElementById('add-status');
+const publishPreparedButton = document.getElementById('publish-prepared');
+const preparedStatus = document.getElementById('prepared-status');
 const productList = document.getElementById('product-list');
 const filterCategory = document.getElementById('filter-category');
 const adminProductCount = document.getElementById('admin-product-count');
@@ -51,6 +53,47 @@ const editStock = document.getElementById('e-stock');
 let allProducts = [];
 let currentFilter = 'all';
 let editingProduct = null;
+
+// Files in /images are deployed with the website, so these catalogue entries do
+// not require manually uploading every photo through the browser. Keep this list
+// duplicate-safe: rerunning it only fills missing records or missing photos.
+const PREPARED_PRODUCTS = [
+  { name: 'Tea Leaves', category: 'teas', price: 'KES 350', unit: 'per kg' },
+  { name: 'Soya', category: 'saltnuts', price: 'KES 350', unit: 'per kg', image: 'images/soya.jpg' },
+  { name: 'Cinnamon', category: 'spices', price: 'KES 1100', unit: 'per kg', image: 'images/cinnamon.jpg' },
+  { name: 'Rosemary', category: 'spices', price: 'KES 1000', unit: 'per kg', image: 'images/rosemary.jpg' },
+  { name: 'Pilau Masala', category: 'spices', price: 'KES 1000', unit: 'per kg', image: 'images/pilau-masala.jpg' },
+  { name: 'Moringa', category: 'teas', price: 'KES 1200', unit: 'per kg', image: 'images/moringa.jpg' },
+  { name: 'Black Pepper', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/black-pepper.jpg' },
+  { name: 'Chia Seeds', category: 'saltnuts', price: 'KES 1200', unit: 'per kg', image: 'images/chia-seeds.jpg' },
+  { name: 'Cumin', category: 'spices', price: 'KES 1600', unit: 'per kg', image: 'images/cumin.jpg' },
+  { name: 'Cayenne', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/cayenne-powder.jpg' },
+  { name: 'Paprika', category: 'spices', price: 'KES 2000', unit: 'per kg', image: 'images/paprika.jpg' },
+  { name: 'Curry Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/curry-powder.jpg' },
+  { name: 'Garam Masala', category: 'spices', price: 'KES 1500', unit: 'per kg', image: 'images/garam-masala.jpg' },
+  { name: 'Onion Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/onion-powder.jpg' },
+  { name: 'Garlic Powder', category: 'spices', price: 'KES 1200', unit: 'per kg', image: 'images/garlic-powder.jpg' },
+  { name: 'Citric Acid', category: 'spices', price: 'KES 800', unit: 'per kg', image: 'images/citric-acid.jpg' },
+  { name: 'Dates', category: 'saltnuts', price: 'KES 900', unit: 'per kg', image: 'images/dates.jpg' },
+  { name: 'Green Indian Pumpkin Seeds', category: 'saltnuts', price: 'KES 1500', unit: 'per kg', image: 'images/green-indian-pumpkin-seeds.jpg' },
+  { name: 'Popcorn Seeds', category: 'saltnuts', price: 'KES 350', unit: 'per kg', image: 'images/popcorn-seeds.jpg' },
+  { name: 'Hibiscus Flowers', category: 'teas', price: 'KES 1600', unit: 'per kg', image: 'images/hibiscus-flowers.jpg' },
+  { name: 'Hibiscus Powder', category: 'teas', price: 'KES 1600', unit: 'per kg', image: 'images/hibiscus-powder.jpg' },
+  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 200', unit: '500g pack' },
+  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 100', unit: '250g pack' },
+  { name: 'Factory Tea Grade PF-1', category: 'teas', price: 'KES 40', unit: '100g pack' }
+];
+
+const PREPARED_PHOTO_UPDATES = [
+  { name: 'Cloves', image: 'images/cloves.jpg' },
+  { name: 'Turmeric', image: 'images/turmeric.jpg' },
+  { name: 'Dried Golden Raisins', image: 'images/dried-golden-raisins.jpg' },
+  { name: 'Fry Ums', image: 'images/fry-ums.jpg' }
+];
+
+function productKey(product) {
+  return `${(product.name || '').trim().toLowerCase()}|${(product.unit || '').trim().toLowerCase()}`;
+}
 
 gateForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -333,5 +376,54 @@ addForm.addEventListener('submit', async (e) => {
   } catch (err) {
     console.error(err);
     addStatus.textContent = 'Could not add product. Please try again.';
+  }
+});
+
+publishPreparedButton.addEventListener('click', async () => {
+  if (!confirm('Publish the prepared products and attach the supplied photos? Existing matching products will be skipped.')) return;
+
+  publishPreparedButton.disabled = true;
+  preparedStatus.textContent = 'Publishing prepared catalogue…';
+  let added = 0;
+  let photosAdded = 0;
+
+  try {
+    const byKey = new Map(allProducts.map((product) => [productKey(product), product]));
+
+    for (const prepared of PREPARED_PRODUCTS) {
+      const key = productKey(prepared);
+      if (byKey.has(key)) continue;
+
+      const record = {
+        name: prepared.name,
+        brand: null,
+        category: prepared.category,
+        price: prepared.price,
+        unit: prepared.unit,
+        image: prepared.image || null,
+        inStock: true
+      };
+      const docRef = await addDoc(collection(db, 'products'), record);
+      const saved = { id: docRef.id, ...record };
+      allProducts.push(saved);
+      byKey.set(key, saved);
+      added += 1;
+    }
+
+    for (const update of PREPARED_PHOTO_UPDATES) {
+      const product = allProducts.find((item) => item.name === update.name);
+      if (!product || product.image) continue;
+      await updateDoc(doc(db, 'products', product.id), { image: update.image });
+      product.image = update.image;
+      photosAdded += 1;
+    }
+
+    renderList();
+    preparedStatus.textContent = `Published ${added} product${added === 1 ? '' : 's'} and added ${photosAdded} photo${photosAdded === 1 ? '' : 's'}.`;
+  } catch (err) {
+    console.error(err);
+    preparedStatus.textContent = 'Some items could not be published. Click again to safely continue.';
+  } finally {
+    publishPreparedButton.disabled = false;
   }
 });

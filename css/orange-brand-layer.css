@@ -94,12 +94,18 @@ body {
 .edit-dialog__actions .add-status { margin-right: auto; }
 .btn-secondary { min-height: 42px; padding: 0 16px; border: 1px solid #d8bea0; border-radius: 8px; background: transparent; color: #244832; font: 700 .73rem/1 var(--font-mono); cursor: pointer; }
 .btn-secondary:hover { background: #f6ead9; }
+.prepared-import { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-top:32px; padding-top:26px; border-top:1px solid #e5caa8; }
+.prepared-import h3 { margin:4px 0 7px; color:#244832; font:700 1.15rem/1.1 var(--font-display); }
+.prepared-import p:not(.admin-kicker) { max-width:620px; margin:0; color:#77634e; font-size:.8rem; line-height:1.5; }
+.prepared-import__actions { display:flex; flex:0 0 auto; align-items:center; gap:12px; }
+.prepared-import__actions .add-status { max-width:230px; }
 
 @media (max-width: 800px) {
   .section { width: calc(100% - 28px); padding: 42px 20px; }
   .category-section { margin-top: 28px; }
   .featured-section, .products-section, .inspiration-section, .service-strip, .story-section, .newsletter { margin-top: 16px; }
   .admin-section--create, .admin-section--products { margin-top: 16px; }
+  .prepared-import, .prepared-import__actions { align-items:flex-start; flex-direction:column; }
   .admin-intro { border-radius: 12px; }
   .edit-form-grid { grid-template-columns: 1fr; }
   .edit-dialog__actions { flex-wrap: wrap; }
