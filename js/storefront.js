@@ -58,9 +58,9 @@ const genericMessage = "Hi, I'd like to know more about your products.";
   if (el) el.href = whatsappUrl(genericMessage);
 });
 
-const wholesaleLink = document.getElementById('nav-wholesale');
-if (wholesaleLink) {
-  wholesaleLink.href = whatsappUrl("Hi, I'd like to ask about wholesale prices.");
+const wholesaleWhatsApp = document.getElementById('wholesale-whatsapp');
+if (wholesaleWhatsApp) {
+  wholesaleWhatsApp.href = whatsappUrl("Hi, I'd like to ask about wholesale prices and availability.");
 }
 
 function matchesFilters(product) {
