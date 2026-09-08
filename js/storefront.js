@@ -27,6 +27,7 @@ const shopMenuToggle = document.getElementById('shop-menu-toggle');
 const shopMenuPanel = document.getElementById('shop-menu-panel');
 const collectionsScroll = document.getElementById('collections-scroll');
 const productDialog = document.getElementById('product-dialog');
+const productStories = document.getElementById('product-stories');
 const dialogVisual = document.getElementById('product-dialog-visual');
 const dialogClose = productDialog.querySelector('.product-dialog__close');
 const dialogCategory = document.getElementById('product-dialog-category');
@@ -344,6 +345,33 @@ function render() {
   filtered.forEach((product) => grid.appendChild(buildCard(product)));
 }
 
+function initProductStories() {
+  if (!productStories) return;
+  const notes = [...productStories.querySelectorAll('[data-story-note]')];
+  const images = [...productStories.querySelectorAll('[data-story-image]')];
+
+  const setActiveStory = (index) => {
+    notes.forEach((note, noteIndex) => {
+      note.classList.toggle('is-active', noteIndex === index);
+      note.classList.toggle('is-past', noteIndex < index);
+    });
+    images.forEach((image, imageIndex) => {
+      image.classList.toggle('is-active', imageIndex === index);
+      image.classList.toggle('is-past', imageIndex < index);
+    });
+  };
+
+  if (!('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    const visibleNote = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visibleNote) setActiveStory(Number(visibleNote.target.dataset.storyNote));
+  }, { threshold: [0.5], rootMargin: '-15% 0px -15% 0px' });
+
+  notes.forEach((note) => observer.observe(note));
+}
+
 async function loadProducts() {
   try {
     const snap = await getDocs(collection(db, 'products'));
@@ -499,6 +527,7 @@ productDialog.addEventListener('cancel', (event) => {
 
 loadProducts();
 initScrollReveal('.collection-card', { stagger: 50 });
+initProductStories();
 
 // Whole sections contain essential page content. Keep them visible even if a
 // browser fails to deliver an observer callback; cards retain the subtle cue.
