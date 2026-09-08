@@ -22,6 +22,7 @@ const featuredGrid = document.getElementById('featured-grid');
 const searchInput = document.getElementById('search-input');
 const headerSearchForm = document.getElementById('header-search-form');
 const headerSearchInput = document.getElementById('header-search-input');
+const headerSearchSuggestions = document.getElementById('header-search-suggestions');
 const shopMenuToggle = document.getElementById('shop-menu-toggle');
 const shopMenuPanel = document.getElementById('shop-menu-panel');
 const collectionsScroll = document.getElementById('collections-scroll');
@@ -349,6 +350,7 @@ async function loadProducts() {
     allProducts = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
     renderFeatured();
     render();
+    renderHeaderSuggestions();
     initScrollReveal('.product-card', { stagger: 44 });
   } catch (err) {
     grid.innerHTML = '';
@@ -380,6 +382,46 @@ function applySearch(value) {
   render();
 }
 
+function closeHeaderSuggestions() {
+  headerSearchSuggestions.hidden = true;
+}
+
+function renderHeaderSuggestions() {
+  const query = headerSearchInput.value.trim().toLowerCase();
+  headerSearchSuggestions.replaceChildren();
+  if (!query) {
+    closeHeaderSuggestions();
+    return;
+  }
+
+  const matches = allProducts.filter((product) => {
+    const searchableText = `${product.name || ''} ${product.brand || ''} ${CATEGORY_LABELS[product.category] || ''}`.toLowerCase();
+    return searchableText.includes(query);
+  }).slice(0, 5);
+
+  if (matches.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'header-search-empty';
+    empty.textContent = 'No matching products';
+    headerSearchSuggestions.appendChild(empty);
+  } else {
+    matches.forEach((product) => {
+      const result = document.createElement('button');
+      result.type = 'button';
+      result.className = 'header-search-result';
+      result.dataset.productId = product.id;
+      result.setAttribute('role', 'option');
+      const name = document.createElement('span');
+      name.textContent = product.name || 'Product';
+      const details = document.createElement('small');
+      details.textContent = `${CATEGORY_LABELS[product.category] || ''}${product.price ? ` · ${product.price}` : ''}`;
+      result.append(name, details);
+      headerSearchSuggestions.appendChild(result);
+    });
+  }
+  headerSearchSuggestions.hidden = false;
+}
+
 function showCategory(category) {
   currentCategory = category;
   renderWithTransition();
@@ -389,10 +431,26 @@ function showCategory(category) {
 headerSearchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   applySearch(headerSearchInput.value);
+  closeHeaderSuggestions();
   document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-headerSearchInput.addEventListener('input', () => applySearch(headerSearchInput.value));
+headerSearchInput.addEventListener('input', () => {
+  applySearch(headerSearchInput.value);
+  renderHeaderSuggestions();
+});
+
+headerSearchInput.addEventListener('focus', renderHeaderSuggestions);
+
+headerSearchSuggestions.addEventListener('click', (event) => {
+  const result = event.target.closest('[data-product-id]');
+  if (!result) return;
+  const product = allProducts.find((item) => item.id === result.dataset.productId);
+  if (!product) return;
+  applySearch(product.name || '');
+  closeHeaderSuggestions();
+  document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 
 shopMenuToggle.addEventListener('click', () => {
   const isOpen = shopMenuToggle.getAttribute('aria-expanded') === 'true';
@@ -414,12 +472,14 @@ document.addEventListener('click', (event) => {
     shopMenuPanel.hidden = true;
     shopMenuToggle.setAttribute('aria-expanded', 'false');
   }
+  if (!event.target.closest('.header-search-wrap')) closeHeaderSuggestions();
 });
 
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
   shopMenuPanel.hidden = true;
   shopMenuToggle.setAttribute('aria-expanded', 'false');
+  closeHeaderSuggestions();
 });
 
 document.getElementById('nav-home').addEventListener('click', (e) => {

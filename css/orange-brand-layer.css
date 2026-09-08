@@ -78,7 +78,29 @@ body {
 .header-order { min-height:40px; padding:0 15px; border-color:var(--emporium-forest); border-radius:8px; background:var(--emporium-forest); color:#fff; font:700 .65rem/1 var(--font-body); letter-spacing:.045em; text-transform:uppercase; }
 .header-order:hover { background:#173a25; color:#fff; transform:translateY(-1px); }
 
-@media (max-width: 980px) { .header-search { width:180px; } .desktop-nav { gap:17px; } }
+/* Predictive search and compact action sizing keep the header focused on product finding. */
+.promo-bar { min-height:34px; padding:7px 20px; }
+.site-header { min-height:68px; gap:clamp(18px,2.5vw,34px); }
+.desktop-nav { gap:clamp(17px,1.7vw,25px); }
+.desktop-nav > a, .shop-menu > button { text-transform:none; font-size:.73rem; letter-spacing:.015em; }
+.header-actions { gap:10px; }
+.header-search-wrap { position:relative; }
+.header-search { width:205px; min-height:36px; padding:0 7px 0 10px; border-radius:7px; }
+.header-search input { padding:0 7px; font-size:.75rem; }
+.header-search button { display:grid; width:26px; height:26px; place-items:center; border-radius:5px; }
+.header-search button:hover { background:#f5eadb; }
+.header-search button .material-symbols-outlined { font-size:1rem; }
+.header-search-suggestions { position:absolute; top:calc(100% + 8px); right:0; z-index:40; width:290px; padding:6px; border:1px solid rgba(31,72,45,.17); border-radius:9px; background:#fffdf8; box-shadow:0 16px 34px rgba(20,52,31,.18); }
+.header-search-suggestions[hidden] { display:none; }
+.header-search-result { display:grid; width:100%; gap:4px; padding:10px; border:0; border-radius:6px; background:transparent; color:var(--emporium-forest); text-align:left; cursor:pointer; }
+.header-search-result:hover, .header-search-result:focus-visible { background:#f5eadb; outline:none; }
+.header-search-result span { font:700 .78rem/1.15 var(--font-body); }
+.header-search-result small { color:#766c60; font:.68rem/1.2 var(--font-body); }
+.header-search-empty { margin:0; padding:10px; color:#766c60; font:.72rem/1.3 var(--font-body); }
+.header-order { min-height:36px; gap:6px; padding:0 12px; border-radius:7px; font-size:.72rem; letter-spacing:.01em; text-transform:none; }
+.header-order .material-symbols-outlined { font-size:1rem; }
+
+@media (max-width: 980px) { .header-search { width:174px; } .desktop-nav { gap:15px; } }
 @media (max-width: 800px) { .promo-bar { min-height:36px; font-size:.61rem; } .site-header { min-height:62px; padding:0 18px; } .desktop-nav, .header-search, .header-order { display:none; } .header-actions { margin-left:auto; } }
 
 /* Catalogue manager */
