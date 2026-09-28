@@ -15,12 +15,22 @@ import {
 import { resizeImage } from './resize-image.js';
 
 const CATEGORY_LABELS = {
-  teas: 'Teas',
-  coffeehoney: 'Coffee & Honey',
-  oils: 'Oils & Tonics',
-  saltnuts: 'Salt, Nuts & Botanicals',
-  spices: 'Spices & Dry Goods'
+  tea: 'Tea', 'tea-bags': 'Tea bags', coffee: 'Coffee', spices: 'Spices',
+  herbs: 'Herbs', salt: 'Salt', nuts: 'Nuts', 'dried-fruits': 'Dried fruits',
+  honey: 'Honey', oils: 'Oils', others: 'Others'
 };
+
+function productCategory(product) {
+  const current = product.category || '';
+  const text = `${product.name || ''} ${product.brand || ''} ${product.unit || ''}`.toLowerCase();
+  if (current === 'teas') return /\b(bag|bags|teabag|teabags)\b/.test(text) ? 'tea-bags' : 'tea';
+  if (current === 'coffeehoney') return /honey|asali/.test(text) ? 'honey' : 'coffee';
+  if (current === 'saltnuts') return /salt/.test(text) ? 'salt' : /nut|cashew|almond|peanut/.test(text) ? 'nuts' : 'others';
+  if (current === 'spices') return /herb|oregano|thyme|rosemary|basil|mint/.test(text) ? 'herbs' : /dried.?fruit|raisin|date|cranberr|prune/.test(text) ? 'dried-fruits' : 'spices';
+  if (current === 'oils') return /tonic/.test(text) ? 'others' : 'oils';
+  if (CATEGORY_LABELS[current]) return current;
+  return 'others';
+}
 
 const gate = document.getElementById('gate');
 const gateForm = document.getElementById('gate-form');
@@ -121,8 +131,8 @@ function renderList() {
   productList.innerHTML = '';
   adminProductCount.textContent = allProducts.length;
   const filtered = allProducts.filter((product) => {
-    const matchesCategory = currentFilter === 'all' || product.category === currentFilter;
-    const searchableText = [product.name, product.brand, product.category, product.price, product.unit]
+    const matchesCategory = currentFilter === 'all' || productCategory(product) === currentFilter;
+    const searchableText = [product.name, product.brand, CATEGORY_LABELS[productCategory(product)], product.price, product.unit]
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
@@ -166,7 +176,7 @@ function buildRow(product) {
 
   const meta = document.createElement('div');
   meta.className = 'row-meta';
-  meta.textContent = `${CATEGORY_LABELS[product.category] || product.category || ''} · ${product.unit || ''}`;
+  meta.textContent = `${CATEGORY_LABELS[productCategory(product)] || 'Others'} · ${product.unit || ''}`;
   info.appendChild(meta);
 
   row.appendChild(info);
@@ -245,7 +255,7 @@ function openEditor(product) {
   editForm.reset();
   editName.value = product.name || '';
   editBrand.value = product.brand || '';
-  editCategory.value = product.category || 'spices';
+  editCategory.value = productCategory(product);
   editPrice.value = product.price || '';
   editUnit.value = product.unit || '';
   editStock.checked = product.inStock !== false;

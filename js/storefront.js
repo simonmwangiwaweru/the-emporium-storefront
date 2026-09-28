@@ -9,12 +9,30 @@ const PHONE = '254794529421'; // 0794529421 with country code, no leading zero
 
 const CATEGORY_LABELS = {
   all: 'All',
-  teas: 'Teas',
-  coffeehoney: 'Coffee & Honey',
-  oils: 'Oils & Tonics',
-  saltnuts: 'Salt, Nuts & Botanicals',
-  spices: 'Spices & Dry Goods'
+  tea: 'Tea',
+  'tea-bags': 'Tea bags',
+  coffee: 'Coffee',
+  spices: 'Spices',
+  herbs: 'Herbs',
+  salt: 'Salt',
+  nuts: 'Nuts',
+  'dried-fruits': 'Dried fruits',
+  honey: 'Honey',
+  oils: 'Oils',
+  others: 'Others'
 };
+
+function productCategory(product) {
+  const current = product.category || '';
+  const text = `${product.name || ''} ${product.brand || ''} ${product.unit || ''}`.toLowerCase();
+  if (current === 'teas') return /\b(bag|bags|teabag|teabags)\b/.test(text) ? 'tea-bags' : 'tea';
+  if (current === 'coffeehoney') return /honey|asali/.test(text) ? 'honey' : 'coffee';
+  if (current === 'saltnuts') return /salt|pink salt/.test(text) ? 'salt' : /nut|cashew|almond|peanut/.test(text) ? 'nuts' : 'others';
+  if (current === 'spices') return /herb|oregano|thyme|rosemary|basil|mint/.test(text) ? 'herbs' : /dried.?fruit|raisin|date|cranberr|prune/.test(text) ? 'dried-fruits' : 'spices';
+  if (current === 'oils') return /tonic/.test(text) ? 'others' : 'oils';
+  if (CATEGORY_LABELS[current]) return current;
+  return 'others';
+}
 
 const grid = document.getElementById('product-grid');
 const gridCount = document.getElementById('grid-count');
@@ -65,7 +83,7 @@ if (wholesaleWhatsApp) {
 }
 
 function matchesFilters(product) {
-  const inCategory = currentCategory === 'all' || product.category === currentCategory;
+  const inCategory = currentCategory === 'all' || productCategory(product) === currentCategory;
   if (!inCategory) return false;
   if (!searchTerm) return true;
   const haystack = `${product.name || ''} ${product.brand || ''}`.toLowerCase();
@@ -129,7 +147,7 @@ function buildCard(product) {
 
   const category = document.createElement('p');
   category.className = 'product-category';
-  category.textContent = CATEGORY_LABELS[product.category] || 'The Emporium selection';
+  category.textContent = CATEGORY_LABELS[productCategory(product)] || 'Others';
   info.appendChild(category);
 
   const price = document.createElement('p');
@@ -166,7 +184,7 @@ function productMessage(product) {
 function prepareDetail(product, source) {
   detailProduct = product;
   detailSource = source;
-  dialogCategory.textContent = CATEGORY_LABELS[product.category] || 'The Emporium selection';
+  dialogCategory.textContent = CATEGORY_LABELS[productCategory(product)] || 'Others';
   dialogTitle.textContent = product.name || 'The Emporium selection';
   dialogBrand.textContent = product.brand || '';
   dialogBrand.hidden = !product.brand;
@@ -297,9 +315,10 @@ function featuredProducts() {
 
   // Lead with variety so this is a considered edit, not merely the first records returned.
   available.forEach((product) => {
-    if (picks.length < 4 && !representedCategories.has(product.category)) {
+    const categoryKey = productCategory(product);
+    if (picks.length < 4 && !representedCategories.has(categoryKey)) {
       picks.push(product);
-      representedCategories.add(product.category);
+      representedCategories.add(categoryKey);
     }
   });
   available.forEach((product) => {
@@ -423,7 +442,7 @@ function renderHeaderSuggestions() {
   }
 
   const matches = allProducts.filter((product) => {
-    const searchableText = `${product.name || ''} ${product.brand || ''} ${CATEGORY_LABELS[product.category] || ''}`.toLowerCase();
+    const searchableText = `${product.name || ''} ${product.brand || ''} ${CATEGORY_LABELS[productCategory(product)] || ''}`.toLowerCase();
     return searchableText.includes(query);
   }).slice(0, 5);
 
@@ -442,7 +461,7 @@ function renderHeaderSuggestions() {
       const name = document.createElement('span');
       name.textContent = product.name || 'Product';
       const details = document.createElement('small');
-      details.textContent = `${CATEGORY_LABELS[product.category] || ''}${product.price ? ` · ${product.price}` : ''}`;
+      details.textContent = `${CATEGORY_LABELS[productCategory(product)] || 'Others'}${product.price ? ` · ${product.price}` : ''}`;
       result.append(name, details);
       headerSearchSuggestions.appendChild(result);
     });
