@@ -15,7 +15,7 @@ import {
 import { resizeImage } from './resize-image.js';
 
 const CATEGORY_LABELS = {
-  tea: 'Tea', 'tea-bags': 'Tea bags', coffee: 'Coffee', spices: 'Spices',
+  tea: 'Tea', 'tea-bags': 'Tea bags', coffee: 'Coffee', spices: 'Spices (Condiments)',
   herbs: 'Herbs', salt: 'Salt', nuts: 'Nuts', 'dried-fruits': 'Dried fruits',
   honey: 'Honey', oils: 'Oils', others: 'Others'
 };

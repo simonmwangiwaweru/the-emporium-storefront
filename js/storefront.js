@@ -12,7 +12,7 @@ const CATEGORY_LABELS = {
   tea: 'Tea',
   'tea-bags': 'Tea bags',
   coffee: 'Coffee',
-  spices: 'Spices',
+  spices: 'Spices (Condiments)',
   herbs: 'Herbs',
   salt: 'Salt',
   nuts: 'Nuts',
