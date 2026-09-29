@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review your Emporium order before ordering on WhatsApp.">
+  <title>Your cart | The Emporium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Playfair+Display:opsz,wght@5..120,600;5..120,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/regenerated.css">
+  <link rel="stylesheet" href="css/light-brand-polish.css">
+  <link rel="stylesheet" href="css/orange-brand-layer.css">
+</head>
+<body class="cart-page">
+  <header class="cart-page-header">
+    <a class="cart-page-brand" href="index.html" aria-label="Return to The Emporium home">The Emporium</a>
+    <a class="cart-continue" href="index.html#products"><span aria-hidden="true">←</span> Continue shopping</a>
+  </header>
+  <main class="cart-page-main">
+    <section class="cart-page-card" aria-labelledby="cart-page-title">
+      <div class="cart-page-title"><div><p>Your order</p><h1 id="cart-page-title">My cart</h1></div><span id="cart-page-count"></span></div>
+      <div class="cart-table-head" aria-hidden="true"><span>Product</span><span>Price</span><span>Quantity</span><span>Total</span></div>
+      <div id="cart-page-items" class="cart-page-items" aria-live="polite"></div>
+      <div id="cart-page-empty" class="cart-page-empty" hidden><span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span><h2>Your cart is empty</h2><p>Browse the catalogue and add the products you would like to order.</p><a href="index.html#products">Browse products</a></div>
+      <footer id="cart-page-summary" class="cart-page-summary"><div><p>Order summary</p><dl><div><dt>Items subtotal</dt><dd id="cart-subtotal">KES 0</dd></div><div><dt>Delivery</dt><dd>Confirmed on WhatsApp</dd></div></dl></div><a id="cart-page-checkout" href="#" target="_blank" rel="noopener">Order on WhatsApp <span aria-hidden="true">→</span></a></footer>
+    </section>
+  </main>
+  <script type="module" src="js/cart.js"></script>
+</body>
+</html>

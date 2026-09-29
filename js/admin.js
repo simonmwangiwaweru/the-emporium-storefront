@@ -23,6 +23,8 @@ const CATEGORY_LABELS = {
 function productCategory(product) {
   const current = product.category || '';
   const text = `${product.name || ''} ${product.brand || ''} ${product.unit || ''}`.toLowerCase();
+  if (/moringa/.test(text)) return 'herbs';
+  if (/hibiscus/.test(text)) return 'others';
   if (current === 'teas') return /\b(bag|bags|teabag|teabags)\b/.test(text) ? 'tea-bags' : 'tea';
   if (current === 'coffeehoney') return /honey|asali/.test(text) ? 'honey' : 'coffee';
   if (current === 'saltnuts') return /salt/.test(text) ? 'salt' : /nut|cashew|almond|peanut/.test(text) ? 'nuts' : 'others';

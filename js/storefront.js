@@ -25,6 +25,8 @@ const CATEGORY_LABELS = {
 function productCategory(product) {
   const current = product.category || '';
   const text = `${product.name || ''} ${product.brand || ''} ${product.unit || ''}`.toLowerCase();
+  if (/moringa/.test(text)) return 'herbs';
+  if (/hibiscus/.test(text)) return 'others';
   if (current === 'teas') return /\b(bag|bags|teabag|teabags)\b/.test(text) ? 'tea-bags' : 'tea';
   if (current === 'coffeehoney') return /honey|asali/.test(text) ? 'honey' : 'coffee';
   if (current === 'saltnuts') return /salt|pink salt/.test(text) ? 'salt' : /nut|cashew|almond|peanut/.test(text) ? 'nuts' : 'others';
@@ -55,6 +57,18 @@ const dialogPrice = document.getElementById('product-dialog-price');
 const dialogUnit = document.getElementById('product-dialog-unit');
 const dialogStock = document.getElementById('product-dialog-stock');
 const dialogOrder = document.getElementById('product-dialog-order');
+const detailPurchaseControls = document.getElementById('detail-purchase-controls');
+const detailQuantityOutput = document.getElementById('detail-quantity');
+const detailQuantityDecrease = document.getElementById('detail-quantity-decrease');
+const detailQuantityIncrease = document.getElementById('detail-quantity-increase');
+const detailAddToCart = document.getElementById('detail-add-to-cart');
+const headerCart = document.getElementById('header-cart');
+const cartCount = document.getElementById('cart-count');
+const cartDialog = document.getElementById('cart-dialog');
+const cartClose = document.getElementById('cart-close');
+const cartItems = document.getElementById('cart-items');
+const cartSummary = document.getElementById('cart-summary');
+const cartCheckout = document.getElementById('cart-checkout');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let allProducts = [];
@@ -65,9 +79,135 @@ let detailProduct = null;
 let detailSource = null;
 let detailFlight = null;
 let detailAnimation = null;
+let detailQuantity = 1;
+let cart = loadCart();
 
 function whatsappUrl(text) {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+}
+
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('emporium-cart') || '[]');
+    return Array.isArray(saved) ? saved.filter((item) => item?.product?.id && Number.isInteger(item.quantity) && item.quantity > 0) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCart() {
+  localStorage.setItem('emporium-cart', JSON.stringify(cart));
+}
+
+function productMessage(product, quantity = 1) {
+  const unit = product.unit ? ` (${product.unit})` : '';
+  const price = product.price ? `\nListed price: ${product.price}` : '';
+  return `Hi, I'd like to order:\n\n${product.name || 'Product'}${unit}\nQuantity: ${quantity}${price}\n\nPlease confirm availability and the total.`;
+}
+
+function cartMessage() {
+  const lines = cart.map((item, index) => {
+    const unit = item.product.unit ? ` (${item.product.unit})` : '';
+    const price = item.product.price ? `\n   Listed price: ${item.product.price}` : '';
+    return `${index + 1}. ${item.product.name || 'Product'}${unit}\n   Quantity: ${item.quantity}${price}`;
+  });
+  return `Hi, I'd like to place this order:\n\n${lines.join('\n\n')}\n\nPlease confirm availability and the total.`;
+}
+
+function totalCartItems() {
+  return cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+function updateCartUi() {
+  const quantity = totalCartItems();
+  cartCount.textContent = String(quantity);
+  headerCart.setAttribute('aria-label', `Open cart, ${quantity} ${quantity === 1 ? 'item' : 'items'}`);
+  cartSummary.textContent = `${quantity} ${quantity === 1 ? 'item' : 'items'}`;
+  cartCheckout.href = quantity ? whatsappUrl(cartMessage()) : '#';
+  cartCheckout.setAttribute('aria-disabled', String(quantity === 0));
+
+  cartItems.replaceChildren();
+  if (!cart.length) {
+    const empty = document.createElement('p');
+    empty.className = 'cart-empty';
+    empty.textContent = 'Your cart is empty. Add products to order them together.';
+    cartItems.appendChild(empty);
+    return;
+  }
+
+  cart.forEach((item) => {
+    const row = document.createElement('article');
+    row.className = 'cart-item';
+    const copy = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = item.product.name || 'Product';
+    const details = document.createElement('p');
+    details.textContent = [item.product.price, item.product.unit].filter(Boolean).join(' · ') || 'Price on request';
+    const controls = document.createElement('div');
+    controls.className = 'cart-item__controls';
+    controls.appendChild(makeQuantityControl(item));
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'cart-item__remove';
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+      cart = cart.filter((entry) => entry.product.id !== item.product.id);
+      saveCart();
+      updateCartUi();
+    });
+    controls.appendChild(remove);
+    copy.append(title, details, controls);
+    row.appendChild(copy);
+    cartItems.appendChild(row);
+  });
+}
+
+function makeQuantityControl(item) {
+  const control = document.createElement('div');
+  control.className = 'quantity-control';
+  control.setAttribute('aria-label', `Quantity for ${item.product.name || 'product'}`);
+  const decrease = document.createElement('button');
+  decrease.type = 'button';
+  decrease.textContent = '−';
+  decrease.setAttribute('aria-label', `Decrease quantity of ${item.product.name || 'product'}`);
+  decrease.disabled = item.quantity <= 1;
+  const output = document.createElement('output');
+  output.textContent = String(item.quantity);
+  const increase = document.createElement('button');
+  increase.type = 'button';
+  increase.textContent = '+';
+  increase.setAttribute('aria-label', `Increase quantity of ${item.product.name || 'product'}`);
+  decrease.addEventListener('click', () => changeCartQuantity(item.product.id, -1));
+  increase.addEventListener('click', () => changeCartQuantity(item.product.id, 1));
+  control.append(decrease, output, increase);
+  return control;
+}
+
+function changeCartQuantity(productId, change) {
+  const item = cart.find((entry) => entry.product.id === productId);
+  if (!item) return;
+  item.quantity = Math.max(1, item.quantity + change);
+  saveCart();
+  updateCartUi();
+}
+
+function addToCart(product, quantity) {
+  const current = cart.find((item) => item.product.id === product.id);
+  if (current) {
+    current.quantity += quantity;
+    current.product = { ...product };
+  } else {
+    cart.push({ product: { ...product }, quantity });
+  }
+  saveCart();
+  updateCartUi();
+}
+
+function updateDetailQuantity() {
+  detailQuantityOutput.value = String(detailQuantity);
+  detailQuantityOutput.textContent = String(detailQuantity);
+  detailQuantityDecrease.disabled = detailQuantity <= 1;
+  if (detailProduct) dialogOrder.href = whatsappUrl(productMessage(detailProduct, detailQuantity));
 }
 
 // Wire every generic "message us" entry point (header, hero, bottom nav, footer)
@@ -177,10 +317,6 @@ function buildCard(product) {
   return card;
 }
 
-function productMessage(product) {
-  return `Hi, I'd like to order: ${product.name} (${product.unit || ''}). Price: ${product.price || 'please advise'}.`;
-}
-
 function prepareDetail(product, source) {
   detailProduct = product;
   detailSource = source;
@@ -193,8 +329,10 @@ function prepareDetail(product, source) {
   dialogUnit.hidden = !product.unit;
   dialogStock.textContent = product.inStock === false ? 'Currently unavailable' : 'Available to order';
   dialogStock.classList.toggle('is-out', product.inStock === false);
-  dialogOrder.href = whatsappUrl(productMessage(product));
+  detailQuantity = 1;
+  updateDetailQuantity();
   dialogOrder.hidden = product.inStock === false;
+  detailPurchaseControls.hidden = product.inStock === false;
 
   const visual = source.cloneNode(true);
   visual.querySelectorAll('.order-btn, .stock-badge').forEach((element) => element.remove());
@@ -543,6 +681,23 @@ productDialog.addEventListener('cancel', (event) => {
   // Escape is keyboard-initiated, so it closes without a movement transition.
   closeProductDetail(false);
 });
+
+detailQuantityDecrease.addEventListener('click', () => {
+  detailQuantity = Math.max(1, detailQuantity - 1);
+  updateDetailQuantity();
+});
+detailQuantityIncrease.addEventListener('click', () => {
+  detailQuantity += 1;
+  updateDetailQuantity();
+});
+detailAddToCart.addEventListener('click', () => {
+  if (!detailProduct) return;
+  addToCart(detailProduct, detailQuantity);
+  detailAddToCart.textContent = 'Added to cart';
+  window.setTimeout(() => { detailAddToCart.textContent = 'Add to cart'; }, 1200);
+});
+
+updateCartUi();
 
 loadProducts();
 initScrollReveal('.collection-card', { stagger: 50 });
