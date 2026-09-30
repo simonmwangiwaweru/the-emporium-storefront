@@ -45,6 +45,17 @@ body {
 .story-copy p { color: rgba(255,255,255,.78); }
 .story-copy .button-quiet { border-color: rgba(255,255,255,.7); }
 .product-card, .inspiration-grid article { border-color: #ead9bd; background: #fffefa; }
+/* Category cards: keep labels readable, but let the photos show through. */
+.collection-card img { filter: brightness(.92) saturate(1.05); }
+.collection-card::after {
+  background: linear-gradient(0deg, rgba(12, 22, 15, .42), rgba(12, 22, 15, .04) 55%, transparent);
+}
+.collection-card span {
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .45);
+}
+@media (hover: hover) and (pointer: fine) {
+  .collection-card:hover img { filter: brightness(.98) saturate(1.1); }
+}
 .collection-card.is-active { outline-color: var(--emporium-orange); }
 .newsletter { margin-top: 24px; background: var(--emporium-forest); border: 1px solid rgba(255,255,255,.14); }
 .newsletter .material-symbols-outlined, .site-footer h2 { color: #ffd287; }

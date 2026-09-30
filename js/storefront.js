@@ -12,7 +12,8 @@ const CATEGORY_LABELS = {
   tea: 'Tea',
   'tea-bags': 'Tea bags',
   coffee: 'Coffee',
-  spices: 'Spices (Condiments)',
+  'spices-powder': 'Spices powder',
+  'spices-whole': 'Spices whole',
   herbs: 'Herbs',
   salt: 'Salt',
   nuts: 'Nuts',
@@ -22,6 +23,16 @@ const CATEGORY_LABELS = {
   others: 'Others'
 };
 
+function spiceSubcategory(text) {
+  if (/curry\s*powder|cayenne|paprika/.test(text)) return 'spices-powder';
+  if (/clove|cardamom|caddamon|jira|jeera|\bcumin\b|cinnamon|black\s*pepper|pepper\s*whole|peppercorn/.test(text)) {
+    return 'spices-whole';
+  }
+  if (/powder|ground|masala/.test(text)) return 'spices-powder';
+  if (/whole|stick|seed|pod/.test(text)) return 'spices-whole';
+  return 'spices-powder';
+}
+
 function productCategory(product) {
   const current = product.category || '';
   const text = `${product.name || ''} ${product.brand || ''} ${product.unit || ''}`.toLowerCase();
@@ -30,7 +41,12 @@ function productCategory(product) {
   if (current === 'teas') return /\b(bag|bags|teabag|teabags)\b/.test(text) ? 'tea-bags' : 'tea';
   if (current === 'coffeehoney') return /honey|asali/.test(text) ? 'honey' : 'coffee';
   if (current === 'saltnuts') return /salt|pink salt/.test(text) ? 'salt' : /nut|cashew|almond|peanut/.test(text) ? 'nuts' : 'others';
-  if (current === 'spices') return /herb|oregano|thyme|rosemary|basil|mint/.test(text) ? 'herbs' : /dried.?fruit|raisin|date|cranberr|prune/.test(text) ? 'dried-fruits' : 'spices';
+  if (current === 'spices' || current === 'spices-powder' || current === 'spices-whole') {
+    if (/herb|oregano|thyme|rosemary|basil|mint/.test(text)) return 'herbs';
+    if (/dried.?fruit|raisin|date|cranberr|prune/.test(text)) return 'dried-fruits';
+    if (current === 'spices-powder' || current === 'spices-whole') return current;
+    return spiceSubcategory(text);
+  }
   if (current === 'oils') return /tonic/.test(text) ? 'others' : 'oils';
   if (CATEGORY_LABELS[current]) return current;
   return 'others';
