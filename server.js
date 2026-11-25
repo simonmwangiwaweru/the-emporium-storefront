@@ -12,7 +12,6 @@ const HOST = '0.0.0.0';
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/', (_req, res) => {
