@@ -29,3 +29,6 @@ css/style.css
 # OS/editor cruft
 .DS_Store
 Thumbs.db
+
+# AI Studio temporary chat upload folder
+public/
